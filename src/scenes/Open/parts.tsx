@@ -1,4 +1,4 @@
-// Open シーンの部品（台本カード・AI チップ・トラックレーン）と小さな道具。
+// Open シーンの部品（台本カード・AI チップ・トラックレーン・マスキングテープ）と小さな道具。
 import React from "react";
 import { C, DISPLAY, FONT, FPS, MONO } from "../../theme";
 import { LEVELS, section } from "../../timeline";
@@ -299,7 +299,7 @@ export const TrackLane: React.FC<{
             fontWeight: 900,
             fontSize: 28,
             lineHeight: "36px",
-            color: mixColor(C.dim, C.text, lit),
+            color: mixColor(C.sub, C.text, lit),
             whiteSpace: "nowrap",
           }}
         >
@@ -384,41 +384,6 @@ export const TrackLane: React.FC<{
         </svg>
       </div>
     </div>
-  );
-};
-
-/* ------------------------------------------------------------------ */
-/**
- * 出力パネル用の合成波形（声の大きさに引っぱられず、常にはっきり動く）。
- * live=0 で平らな暗い線、1 でミントの波。level で少しだけ振幅が増える。
- */
-export const SynthWave: React.FC<{ w: number; h: number; t: number; live: number; level: number }> = ({ w, h, t, live, level }) => {
-  const N = 72;
-  const pts: string[] = [];
-  const amp = live * (0.55 + 0.35 * clamp01(level * 2.2));
-  for (let i = 0; i <= N; i++) {
-    const u = i / N;
-    const env = Math.sin(Math.PI * u) ** 1.2;
-    const y =
-      0.55 * Math.sin(2 * Math.PI * (2.2 * u) + t * 7.1) +
-      0.3 * Math.sin(2 * Math.PI * (5.3 * u) - t * 11.3 + 1.1) +
-      0.18 * Math.sin(2 * Math.PI * (9.1 * u) + t * 17.7 + 2.3);
-    pts.push(`${(u * w).toFixed(1)},${(h / 2 - y * env * amp * (h / 2) * 0.95).toFixed(1)}`);
-  }
-  const col = mixColor(C.dim, C.mint, live);
-  return (
-    <svg width={w} height={h} style={{ overflow: "visible", display: "block" }}>
-      <line x1={0} x2={w} y1={h / 2} y2={h / 2} stroke={C.border} strokeWidth={1} />
-      <polyline
-        points={pts.join(" ")}
-        fill="none"
-        stroke={col}
-        strokeWidth={2.5}
-        strokeLinejoin="round"
-        strokeLinecap="round"
-        style={live > 0.3 ? { filter: `drop-shadow(0 0 6px ${withAlpha(C.mint, live)})` } : undefined}
-      />
-    </svg>
   );
 };
 

@@ -1,29 +1,43 @@
 /*
- * COLD OPEN — 絵コンテ（すべての時刻は台本の行・フレーズ基準。秒の直書きなし）
+ * COLD OPEN — 絵コンテ（時刻はすべて台本の行・フレーズ基準。秒の直書きなし）
  *
  * 0. 1フレーム目から完成した絵（暗転なし・サムネイルになる）
- *    右: 深夜のボーカルブース。吸音材の壁、点灯した「ON AIR」、ポップガード付きのマイク、
- *        スポットライトの当たった空のスツール。マイクの入力メーターは「MIC 1  -∞ dB」。
- *    左: 「マイクの前には、」＋ 見出し「誰もいない。」（DISPLAY 184px）
- *        ＋「● VOICE BY  Gemini 3.8 Flash TTS」＋ 声で動く PGM OUT の波形。
- * 1. open-1「この声、録音じゃありません。」
- *    「この声、」… ON AIR が全灯になり、PGM OUT の線が実際の声で揺れ始める。全体がゆっくり寄る。
- *    「録音じゃありません」… マイクの入力の横に「NO INPUT」が点く（声は出ているのに、マイクには何も入っていない）。
- *    行の終わりで左は上へ、ブースは右へ抜け、そのまま次の図に重なって切り替わる（暗転しない）。
- * 2. open-2「台本を渡しただけで、AIが演じています。」
- *    左から: 台本カード（行が書き込まれる）→ 信号線（ミントのパルス）→ AI チップ（ピンが点灯）
- *    →「演じています」で出力パネルが LIVE に。IDLE の間は平らな暗い線、LIVE からはっきり動く合成波形。
- * 3. open-3「作ったのは、Googleの新しい音声モデル「Gemini 3.8 Flash TTS」。」
- *    「作ったのは」… 台本と出力がチップに吸い込まれ、チップが 1.7 倍に。ピンは声に合わせて脈打つ。
- *    「Googleの新しい音声モデル」… 上に「GOOGLE · NEW SPEECH MODEL」（28px）が打ち込まれ、
- *    その途中でコーラルのマスキングテープがチップの上に左から貼られ、製品名が書かれたラベルになる。
- *    「Gemini 3.8 Flash TTS」… テープがぎゅっと押さえられて光がなで、下にセッション情報（種類・公開日）。
- * 4. open-4「何ができるのか、5つのトラックで聴いてみましょう。」
- *    テープのラベルが左上のセッション名へ縮み、DAW のトラック一覧（5 レーン）が右から滑り込む。
- *    クリップは実際の各トラックの音声波形・実際の長さで階段状に並ぶ。
- *    「5つのトラック」で右上に「5 TRACKS」、レーンが上から順に点灯（SESSION の横の小さな波形は声に反応）。
- *    「聴いてみましょう」でコーラルの再生ヘッドが先頭に降り、そのまま TRACK 01 の上を走り出す
- *    （TRACK 01 が点灯し、再生済みの部分が塗られる）→ TRACK 01 のテープへ。
+ *    右: 深夜のボーカルブース。吸音材の壁、ON AIR ランプ、ポップガード付きのマイク、
+ *        スポットライトの当たった空のスツール。
+ *    左: スタジオの壁掛け時計（秒の LED の輪、表示は 23:59）＋「深夜0時。」
+ *        見出し「誰もいない。」（DISPLAY 206px）
+ *        その下に 2 本の信号: PGM OUT（声で動くミントの線）と MIC 1（平らな暗い線）。
+ *
+ * 1. open-1「深夜0時。ブースのマイクの前には、誰もいません。」
+ *    「深夜0時。」… ON AIR が全灯。「0時」で時計が 23:59 → 00:00 に切り替わり、秒の輪が
+ *                   時計回りに消えてリセット（以後 1 秒ごとに 1 灯）。PGM OUT が実際の声で揺れ始める。
+ *    「ブースのマイク」… マイクにフォーカス枠がはまる（MIC 1）。ブースへゆっくり寄る。
+ *    「誰もいません。」… 枠がマイクの前の空いた場所（スツール）へ移り、コーラルの「EMPTY」に。
+ *                     MIC 1 の線の横に「NO INPUT」。声は出ているのに、マイクには何も入っていない。
+ *    行の終わりで左は上へ、ブースは右へ抜ける（暗転しない）。
+ *
+ * 2. open-2「しゃべっているのは、台本を受け取ったAIです。」
+ *    「しゃべっているのは、」… 右に VOICE OUT パネル。いま聞こえている声で波形が動く（OUTPUT / 声）。
+ *                             台本とエンジンの場所は「?」の点線スロットで空いている（誰が？）。
+ *    「台本を受け取っ」… 左のスロットに台本カードが落ちて行が書き込まれ、信号線が中央の空きスロットへ伸びる。
+ *    「たAIです。」… 中央に AI チップが弾んで出て、ピンが時計回りに点灯。チップから出力へ線がつながり、
+ *                    出力パネルがミントに光る（ENGINE / しゃべり手）。
+ *
+ * 3. open-3「名前は「Gemini 3.8 Flash TTS」。Googleの新しい音声モデルです。」
+ *    「名前は、」… 台本と出力がチップに吸い込まれ、チップが 1.7 倍に。ピンは声に合わせて脈打つ。
+ *    「Gemini 3.8 Flash TTS」… コーラルのマスキングテープが、名前を読み上げる速さで左からチップの上に
+ *                             貼られていく（読まれた語から見えてくる）。製品名は全体を同じ墨色
+ *                             （数字だけの色分けはしない）のチャンネルラベル。貼り終わりでぎゅっと押さえられ、光がなでる。
+ *    「Googleの新しい音声モデルです。」… テープの下にセッション情報が語に合わせて 1 項目ずつ打ち込まれる:
+ *                             BY GOOGLE ｜ TYPE NEW SPEECH MODEL ｜ RELEASED 2026.09.23
+ *
+ * 4. open-4「今夜のセッション、1トラックずつ再生していきます。」
+ *    「今夜のセッションは」… テープが左上のセッション名（TONIGHT'S SESSION）へ縮み、
+ *                           DAW のトラック一覧（5 レーン、題は section(id).title）が右から滑り込む。
+ *                           クリップは各トラックの実際の音声波形・実際の長さで階段状に並ぶ。
+ *    「今夜のセッション、」の終わり… 右上に「5 TRACKS」。
+ *    「1トラックずつ」… レーンが上から順に点灯。
+ *    「再生していきます。」… コーラルの再生ヘッドが先頭に降り、TRACK 01 の上を走り出す → TRACK 01 のテープへ。
  */
 import React from "react";
 import { Oscilloscope } from "../components/Meters";
@@ -32,10 +46,11 @@ import { SceneShell } from "../components/SceneShell";
 import { Sfx } from "../components/Sfx";
 import { VoiceBars, useVoiceLevel } from "../components/VoiceBars";
 import { C, DISPLAY, FONT, MONO, PAD_X, W } from "../theme";
-import { line, sceneEnter, section } from "../timeline";
+import { line, section } from "../timeline";
 import { clamp01, ease, mix, prog, springAt, useTime } from "../time";
-import { BOOTH_W, Booth } from "./Open/booth";
-import { Chip, ScriptCard, SynthWave, TapeLabel, TrackLane, sectionWave, typed } from "./Open/parts";
+import { BOOTH_W, Booth, type Focus } from "./Open/booth";
+import { StudioClock } from "./Open/clock";
+import { Chip, ScriptCard, TapeLabel, TrackLane, mixColor, sectionWave, typed, withAlpha } from "./Open/parts";
 import { phrases } from "./Open/timing";
 
 /* ---------------- 時刻（台本の行・フレーズから） ---------------- */
@@ -43,44 +58,58 @@ const L1 = line("open-1");
 const L2 = line("open-2");
 const L3 = line("open-3");
 const L4 = line("open-4");
-const [, p1b] = phrases("open-1", [0.45]); // この声、 / 録音じゃありません。
-const [p2a, p2b] = phrases("open-2", [0.55]); // 台本を渡しただけで、 / AIが演じています。
-const [p3a, p3b, p3c] = phrases("open-3", [0.2, 0.6]); // 作ったのは、 / Googleの新しい音声モデル / Gemini 3.8 Flash TTS
-const [, p4b] = phrases("open-4", [0.35]); // 何ができるのか、 / 5つのトラックで聴いてみましょう。
+const [p1a, p1b, p1c] = phrases("open-1", [0.26, 0.73]); // 深夜0時。 / ブースのマイクの前には、 / 誰もいません。
+const [p2a, p2b, p2c] = phrases("open-2", [0.4, 0.75]); // しゃべっているのは、 / 台本を受け取っ / たAIです。
+const [p3a, p3b, p3c] = phrases("open-3", [0.13, 0.58]); // 名前は、 / Gemini 3.8 Flash TTS。 / Googleの新しい音声モデルです。
+const [p4a, p4b] = phrases("open-4", [0.36]); // 今夜のセッション、 / 1トラックずつ再生していきます。
 
-const T_IN = sceneEnter("open"); // 最初のシーンなので 0
+// 1
 const T_AIR = L1.start - 0.1;
-const T_NOINPUT = p1b.start;
+const T_ROLL = mix(p1a.start, p1a.end, 0.42); // 「0時」
+const T_FOCUS = mix(p1b.start, p1b.end, 0.26); // 「マイク」
+const T_EMPTY = p1c.start - 0.08; // 「誰もいません」
+const T_NOINPUT = p1c.start + 0.22;
 const T_OUT1 = L1.end - 0.08;
-const T_A = mix(L1.end, L2.start, 0.35);
-const T_WIRE_AB = mix(p2a.start, p2a.end, 0.62);
-const T_B = p2b.start - 0.06;
-const T_WIRE_BC = p2b.start + 0.26;
-const T_C = p2b.start + 0.5;
+// 2
+const T_C = L2.start - 0.16; // 出力パネル（しゃべっているのは）
+const T_SLOT_B = T_C + 0.22; // 空きスロット（チップの場所）
+const T_SLOT_A = T_C + 0.34; // 空きスロット（台本の場所）
+const T_A = p2b.start - 0.12; // 台本カード
+const T_WIRE_AB = mix(p2b.start, p2b.end, 0.45);
+const T_B = p2c.start - 0.04; // AI チップ
+const T_WIRE_BC = T_B + 0.22;
+const T_LINKED = T_WIRE_BC + 0.3;
+// 3
 const T_COLLAPSE = L3.start - 0.12;
-const T_LABEL = p3b.start;
-const T_TAPE = mix(p3b.start, p3b.end, 0.2);
-const TAPE_DUR = 0.6;
-const T_NAME = p3c.start; // 製品名が読み上げられる瞬間
+const T_TAPE = p3b.start - 0.22; // 名前を読み上げる速さでテープを貼っていく
+const T_TAPE_END = Math.max(T_TAPE + 0.6, p3b.end - 0.2);
+const T_PRESS = T_TAPE_END - 0.02;
+const META = [p3c.start - 0.05, mix(p3c.start, p3c.end, 0.24), mix(p3c.start, p3c.end, 0.5)]; // Google / 新しい音声モデル / 公開日
+// 4
 const T_HEADER = L3.end;
-const LIT_STEP = Math.min(0.2, (p4b.dur * 0.5) / 5);
-const T_LIT = (i: number) => p4b.start + 0.04 + i * LIT_STEP;
-const T_PLAYHEAD = mix(p4b.start, p4b.end, 0.55);
+const T_FIVE = mix(p4a.start, p4a.end, 0.7); // 「セッション」
+const LIT_STEP = Math.min(0.14, (p4b.dur * 0.4) / 5);
+const T_LIT = (i: number) => p4b.start + 0.02 + i * LIT_STEP; // 「1トラックずつ」
+const T_PLAYHEAD = Math.max(T_LIT(4) + 0.15, mix(p4b.start, p4b.end, 0.4)); // 「再生して」
 const T_PLAY = T_PLAYHEAD + 0.25;
 
 /* ---------------- レイアウト ---------------- */
 const CX = W / 2;
 
 // 1: 冒頭
+const COL_W = 1104; // 左の列（見出し・信号）の幅。ブースの手前で止める
+const CLOCK = 132;
+const CLOCK_Y = 182;
 const HEAD_FS = 206; // 「誰もいない。」が約 1090px 幅になる
-const COL_W = 1104; // 左の列（見出し・波形）の幅。ブースの手前で止める
-const LEAD_Y = 244;
-const HEAD_Y = 314;
-const TAG_Y = 574;
-const SCOPE_Y = 772;
-const SCOPE_H = 140;
+const HEAD_Y = 338;
+const PGM_Y = 612; // PGM OUT の見出し行
+const SCOPE_H = 104;
+const MIC_Y = 776; // MIC 1 の見出し行
 const BOOTH_X = W - PAD_X - BOOTH_W;
 const BOOTH_Y = 150;
+// フォーカス枠（ブースの座標）
+const F_MIC = { x: 300, y: 182, w: 208, h: 272 };
+const F_EMPTY = { x: 50, y: 172, w: 262, h: 490 };
 
 // 2: パイプライン
 const NODE_Y = 470;
@@ -99,8 +128,14 @@ const NAME_FS = 112;
 const NAME_W = (1289 * NAME_FS) / 100; // Dela Gothic One で実測した幅
 const TAPE_W = Math.round(NAME_W + 150);
 const TAPE_H = 184;
-const TAPE_Y = 462;
+const TAPE_Y = 452;
 const TAPE_ROT = -1.5;
+const META_Y = TAPE_Y + TAPE_H / 2 + 52;
+const META_ITEMS = [
+  { k: "BY", v: "GOOGLE" },
+  { k: "TYPE", v: "NEW SPEECH MODEL" },
+  { k: "RELEASED", v: "2026.09.23" },
+];
 
 // 4: トラック一覧
 const HEADER_Y = 206;
@@ -137,6 +172,13 @@ const mono = (size: number, color: string = C.sub, weight = 700): React.CSSPrope
   whiteSpace: "nowrap",
 });
 
+const lerpRect = (a: typeof F_MIC, b: typeof F_MIC, p: number) => ({
+  x: mix(a.x, b.x, p),
+  y: mix(a.y, b.y, p),
+  w: mix(a.w, b.w, p),
+  h: mix(a.h, b.h, p),
+});
+
 /* ================================================================== */
 export const Open: React.FC = () => {
   const t = useTime();
@@ -144,21 +186,39 @@ export const Open: React.FC = () => {
   const level = lv ? clamp01(lv.rms * 2.5) : 0;
 
   /* ---- 1. 無人のブース ---- */
-  const push = prog(t, T_IN, L1.end, ease.out);
+  const push = prog(t, L1.start, L1.end, ease.inOut);
   const onAir = mix(0.72, 1, prog(t, T_AIR, T_AIR + 0.18, ease.out));
-  const noInput = prog(t, T_NOINPUT, T_NOINPUT + 0.2, ease.outQuint);
+  const kickerLit = prog(t, T_ROLL, T_ROLL + 0.3, ease.out);
+  const fIn = prog(t, T_FOCUS, T_FOCUS + 0.32, ease.outQuint);
+  const fMove = prog(t, T_EMPTY, T_EMPTY + 0.42, ease.inOut);
+  const hot = prog(t, T_EMPTY + 0.12, T_EMPTY + 0.36, ease.out);
+  const fRect = lerpRect(F_MIC, F_EMPTY, fMove);
+  const grow = (1 - fIn) * 26; // はまる瞬間は少し大きい枠から締まる
+  const focus: Focus = {
+    x: fRect.x - grow,
+    y: fRect.y - grow,
+    w: fRect.w + grow * 2,
+    h: fRect.h + grow * 2,
+    label: fMove < 0.5 ? "MIC 1" : "EMPTY",
+    op: fIn,
+    hot,
+  };
+  const noInput = prog(t, T_NOINPUT, T_NOINPUT + 0.22, ease.outQuint);
+  const stamp = springAt(t, T_NOINPUT, { damping: 11, stiffness: 240 });
+  const accentGlow = prog(t, p1c.start, p1c.start + 0.25) * (1 - 0.6 * prog(t, p1c.start + 0.3, p1c.end + 0.2));
   const out1 = prog(t, T_OUT1, T_OUT1 + 0.38, ease.inOut);
   const db = lv && lv.rms > 0.004 ? 20 * Math.log10(lv.rms) : null;
 
   /* ---- 2. パイプライン ---- */
+  const cIn = prog(t, T_C, T_C + 0.42, ease.outQuint);
+  const live = prog(t, L2.start - 0.05, L2.start + 0.15);
   const aIn = springAt(t, T_A, { damping: 15, stiffness: 170 });
-  const typeP = prog(t, p2a.start + 0.05, p2a.end, ease.linear);
-  const wAB = prog(t, T_WIRE_AB, T_WIRE_AB + 0.32, ease.outQuint);
+  const typeP = prog(t, p2b.start + 0.02, p2b.end, ease.linear);
+  const wAB = prog(t, T_WIRE_AB, T_WIRE_AB + 0.34, ease.outQuint);
   const bIn = springAt(t, T_B, { damping: 13, stiffness: 190 });
   const bGlow = prog(t, T_B + 0.05, T_B + 0.35);
   const wBC = prog(t, T_WIRE_BC, T_WIRE_BC + 0.3, ease.outQuint);
-  const live = prog(t, T_C, T_C + 0.25);
-  const cPanelIn = prog(t, T_A + 0.1, T_A + 0.5, ease.out);
+  const linked = prog(t, T_LINKED, T_LINKED + 0.25);
   const col = prog(t, T_COLLAPSE, p3a.end + 0.1, ease.inOut);
   const labelsOut = prog(t, T_COLLAPSE, T_COLLAPSE + 0.25, ease.out);
 
@@ -169,24 +229,20 @@ export const Open: React.FC = () => {
   const sideAlpha = 1 - prog(col, 0.45, 1);
 
   /* ---- 3. テープのラベル ---- */
-  const labelType = prog(t, T_LABEL, T_LABEL + 0.7, ease.linear);
-  const labelIn = prog(t, T_LABEL - 0.1, T_LABEL + 0.2, ease.out);
-  const unroll = prog(t, T_TAPE, T_TAPE + TAPE_DUR, ease.inOut);
-  const covered = prog(t, T_TAPE + 0.1, T_TAPE + TAPE_DUR * 0.8, ease.inOut);
-  const settle = springAt(t, T_TAPE + TAPE_DUR - 0.05, { damping: 12, stiffness: 220 });
-  const press = Math.sin(Math.PI * prog(t, T_NAME, T_NAME + 0.32, ease.linear));
-  const sheen = t >= T_NAME ? prog(t, T_NAME, T_NAME + 0.7, ease.inOut) : -1;
-  const metaIn = prog(t, T_NAME + 0.12, T_NAME + 0.5, ease.out);
+  const unrollLin = prog(t, T_TAPE, T_TAPE_END, ease.linear);
+  const unroll = mix(unrollLin, ease.out(unrollLin), 0.2);
+  const covered = prog(unroll, 0.28, 0.62, ease.inOut);
+  const settle = springAt(t, T_PRESS, { damping: 12, stiffness: 220 });
+  const press = Math.sin(Math.PI * prog(t, T_PRESS, T_PRESS + 0.32, ease.linear));
+  const sheen = t >= T_PRESS ? prog(t, T_PRESS, T_PRESS + 0.7, ease.inOut) : -1;
   const extrasOut = prog(t, T_HEADER, T_HEADER + 0.25, ease.out);
 
   const chipScale = bIn * mix(1, CHIP_BIG, col) * mix(1, 0.92, covered);
   const chipAlpha = 1 - covered;
-  const chipTop = NODE_Y - (B_SIZE / 2 + B_PIN) * mix(1, CHIP_BIG, col);
-  const labelY = mix(chipTop - 62, TAPE_Y - TAPE_H / 2 - 66, prog(t, T_TAPE, T_TAPE + 0.5, ease.inOut));
 
   /* ---- 4. トラック一覧 ---- */
   const hm = prog(t, T_HEADER, L4.start + 0.18, ease.inOut);
-  const five = springAt(t, p4b.start - 0.02, { damping: 12, stiffness: 200 });
+  const five = springAt(t, T_FIVE, { damping: 12, stiffness: 200 });
   const rulerIn = prog(t, L4.start, L4.start + 0.5, ease.outQuint);
   const phDrop = prog(t, T_PLAYHEAD, T_PLAYHEAD + 0.3, ease.outQuint);
   const playing = prog(t, T_PLAY, T_PLAY + 0.15, ease.out);
@@ -201,8 +257,8 @@ export const Open: React.FC = () => {
 
   const wireY = NODE_Y;
   const aRight = aCx + (A.w / 2) * sideScale;
-  const bLeft = CX - (B_SIZE / 2 + B_PIN) * chipScale;
-  const bRight = CX + (B_SIZE / 2 + B_PIN) * chipScale;
+  const bLeft = CX - (B_SIZE / 2 + B_PIN) * Math.max(1, chipScale);
+  const bRight = CX + (B_SIZE / 2 + B_PIN) * Math.max(1, chipScale);
   const cLeft = cCx - (Cn.w / 2) * sideScale;
   const wireAlpha = 1 - prog(col, 0.3, 0.8);
 
@@ -217,11 +273,11 @@ export const Open: React.FC = () => {
               left: BOOTH_X,
               top: BOOTH_Y,
               opacity: 1 - out1,
-              transform: `translateX(${out1 * 70}px) scale(${mix(1.035, 1, push)})`,
-              transformOrigin: "40% 60%",
+              transform: `translateX(${out1 * 70}px) scale(${mix(1, 1.03, push)})`,
+              transformOrigin: "55% 45%",
             }}
           >
-            <Booth onAir={onAir} spot={1} noInput={noInput} />
+            <Booth onAir={onAir} spot={1} focus={focus} />
           </div>
 
           <div
@@ -231,28 +287,45 @@ export const Open: React.FC = () => {
               top: 0,
               width: COL_W,
               height: 1080,
-              transform: `scale(${mix(1.025, 1, push)})`,
+              transform: `scale(${mix(1, 1.015, push)})`,
               transformOrigin: `0px ${HEAD_Y + HEAD_FS / 2}px`,
             }}
           >
-            {/* 見出し */}
+            {/* 時計 + 深夜0時。 */}
             <div
               style={{
                 position: "absolute",
                 left: 0,
-                top: LEAD_Y,
-                fontFamily: FONT,
-                fontWeight: 900,
-                fontSize: 56,
-                lineHeight: "64px",
-                color: C.text,
-                whiteSpace: "nowrap",
+                top: CLOCK_Y,
+                height: CLOCK,
+                display: "flex",
+                alignItems: "center",
+                gap: 30,
                 opacity: 1 - prog(out1, 0, 0.7),
                 transform: `translateY(${-out1 * 40}px)`,
               }}
             >
-              マイクの前には、
+              <StudioClock size={CLOCK} t={t} tRoll={T_ROLL} />
+              <div>
+                <div style={{ ...mono(18, mixColor(C.dim, C.coral, kickerLit)), letterSpacing: "0.2em" }}>
+                  {kickerLit > 0.5 ? "BOOTH A · ROLLING" : "BOOTH A · STANDBY"}
+                </div>
+                <div
+                  style={{
+                    fontFamily: FONT,
+                    fontWeight: 900,
+                    fontSize: 60,
+                    lineHeight: "72px",
+                    color: mixColor(C.sub, C.text, kickerLit),
+                    whiteSpace: "nowrap",
+                  }}
+                >
+                  深夜0時。
+                </div>
+              </div>
             </div>
+
+            {/* 見出し */}
             <div
               style={{
                 position: "absolute",
@@ -268,52 +341,63 @@ export const Open: React.FC = () => {
                 transform: `translateY(${-out1 * 44}px)`,
               }}
             >
-              誰も<span style={{ color: C.coral }}>いない。</span>
-            </div>
-            {/* 何の動画か */}
-            <div
-              style={{
-                position: "absolute",
-                left: 0,
-                top: TAG_Y,
-                height: 44,
-                display: "flex",
-                alignItems: "center",
-                gap: 18,
-                opacity: 1 - prog(out1, 0.2, 0.9),
-                transform: `translateY(${-out1 * 48}px)`,
-              }}
-            >
-              <div style={{ width: 16, height: 16, borderRadius: 8, background: C.coral, boxShadow: `0 0 14px ${C.coral}` }} />
-              <div style={{ ...mono(24, C.sub) }}>VOICE BY</div>
-              <div style={{ ...mono(34, C.text), letterSpacing: "0.04em" }}>Gemini 3.8 Flash TTS</div>
+              誰も
+              <span style={{ color: C.coral, textShadow: `0 0 ${50 * accentGlow}px ${withAlpha(C.coral, 0.55 * accentGlow)}` }}>いない。</span>
             </div>
 
-            {/* PGM OUT: 実際の声 */}
-            <div style={{ position: "absolute", left: 0, top: SCOPE_Y - SCOPE_H / 2, width: COL_W, height: SCOPE_H, opacity: 1 - prog(out1, 0.3, 1) }}>
-              <div style={{ position: "absolute", left: 0, top: SCOPE_H / 2 - 0.5, width: COL_W, height: 1, background: C.border }} />
-              <Oscilloscope width={COL_W} height={SCOPE_H} color={C.mint} gain={1.1} thickness={3} lines={["open-1"]} />
-              <div style={{ position: "absolute", left: 0, top: -10, ...mono(18) }}>
-                <span style={{ color: C.mint }}>●</span> PGM OUT
+            {/* 信号: PGM OUT（声がある） */}
+            <div style={{ position: "absolute", left: 0, top: PGM_Y, width: COL_W, opacity: 1 - prog(out1, 0.2, 0.9), transform: `translateY(${-out1 * 48}px)` }}>
+              <div style={{ display: "flex", alignItems: "center", gap: 12, height: 26, ...mono(19) }}>
+                <div style={{ width: 11, height: 11, borderRadius: 6, background: C.mint, boxShadow: `0 0 10px ${C.mint}` }} />
+                <span style={{ color: C.text }}>PGM OUT</span>
+                <span style={{ color: C.dim }}>· 声</span>
+                <div style={{ flex: 1 }} />
+                <span style={{ color: db !== null ? C.text : C.dim, fontVariantNumeric: "tabular-nums" }}>
+                  {db !== null ? `${db.toFixed(1)} dB` : "-∞ dB"}
+                </span>
               </div>
-              <div
-                style={{
-                  position: "absolute",
-                  right: 0,
-                  top: -10,
-                  ...mono(18, db !== null ? C.text : C.dim),
-                  fontVariantNumeric: "tabular-nums",
-                }}
-              >
-                {db !== null ? `${db.toFixed(1)} dB` : "-∞ dB"}
+              <div style={{ position: "relative", marginTop: 10, width: COL_W, height: SCOPE_H }}>
+                <div style={{ position: "absolute", left: 0, top: SCOPE_H / 2 - 0.5, width: COL_W, height: 1, background: C.border }} />
+                <Oscilloscope width={COL_W} height={SCOPE_H} color={C.mint} gain={2.4} thickness={3} lines={["open-1"]} />
               </div>
+            </div>
+
+            {/* 信号: MIC 1（マイクには何も入っていない） */}
+            <div style={{ position: "absolute", left: 0, top: MIC_Y, width: COL_W, opacity: 1 - prog(out1, 0.3, 1), transform: `translateY(${-out1 * 52}px)` }}>
+              <div style={{ display: "flex", alignItems: "center", gap: 12, height: 32, ...mono(19) }}>
+                <div style={{ width: 11, height: 11, borderRadius: 6, boxSizing: "border-box", border: `2px solid ${C.dim}` }} />
+                <span style={{ color: C.sub }}>MIC 1</span>
+                <span style={{ color: C.dim }}>· マイク</span>
+                <div
+                  style={{
+                    marginLeft: 8,
+                    height: 34,
+                    padding: "0 14px",
+                    display: "flex",
+                    alignItems: "center",
+                    borderRadius: 6,
+                    border: `1.5px solid ${C.coral}`,
+                    background: C.coralSoft,
+                    color: C.coral,
+                    fontSize: 19,
+                    opacity: noInput,
+                    transform: `scale(${mix(1.25, 1, clamp01(stamp))})`,
+                    transformOrigin: "0% 50%",
+                  }}
+                >
+                  NO INPUT
+                </div>
+                <div style={{ flex: 1 }} />
+                <span style={{ color: C.dim }}>-∞ dB</span>
+              </div>
+              <div style={{ position: "relative", marginTop: 16, width: COL_W, height: 2, background: mixColor(C.border, C.dim, 0.6), borderRadius: 1 }} />
             </div>
           </div>
         </>
       )}
 
       {/* ================= 2: パイプライン ================= */}
-      {t >= T_A - 0.05 && t < p3a.end + 0.3 && (
+      {t >= T_C - 0.05 && t < p3a.end + 0.3 && (
         <>
           {/* 信号線 */}
           <svg width={W} height={1080} style={{ position: "absolute", left: 0, top: 0, opacity: wireAlpha }}>
@@ -356,23 +440,60 @@ export const Open: React.FC = () => {
             })}
           </svg>
 
-          {/* 台本カード */}
-          <div
-            style={{
-              position: "absolute",
-              left: aCx - A.w / 2,
-              top: NODE_Y - A.h / 2,
-              width: A.w,
-              height: A.h,
-              opacity: clamp01(aIn * 1.4) * sideAlpha,
-              transform: `scale(${mix(0.86, 1, aIn) * sideScale}) rotate(${mix(-4, 0, aIn)}deg)`,
-              filter: "drop-shadow(0 20px 40px rgba(0,0,0,0.45))",
-            }}
-          >
-            <ScriptCard w={A.w} h={A.h} type={typeP} lit={1 - col} />
-          </div>
+          {/* 「しゃべっているのは？」: 台本とチップの場所は点線の空きスロットで待つ */}
+          {[
+            { cx: A_CX, w: A.w, h: A.h, r: 16, at: T_SLOT_A, fill: aIn },
+            { cx: CX, w: B_SIZE, h: B_SIZE, r: 22, at: T_SLOT_B, fill: bIn },
+          ].map((sl, i) => {
+            const p = prog(t, sl.at, sl.at + 0.35, ease.outQuint);
+            const op = p * (1 - clamp01(sl.fill * 2.5));
+            if (op <= 0) return null;
+            return (
+              <div
+                key={i}
+                style={{
+                  position: "absolute",
+                  left: sl.cx - sl.w / 2,
+                  top: NODE_Y - sl.h / 2,
+                  width: sl.w,
+                  height: sl.h,
+                  borderRadius: sl.r,
+                  border: `2px dashed ${C.borderHi}`,
+                  boxSizing: "border-box",
+                  opacity: op,
+                  transform: `scale(${mix(0.92, 1, p)})`,
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  fontFamily: DISPLAY,
+                  fontSize: 64,
+                  color: C.dim,
+                }}
+              >
+                ?
+              </div>
+            );
+          })}
 
-          {/* 出力パネル: IDLE は平らな暗い線、LIVE からはっきり動く波形 */}
+          {/* 台本カード */}
+          {t >= T_A && (
+            <div
+              style={{
+                position: "absolute",
+                left: aCx - A.w / 2,
+                top: NODE_Y - A.h / 2,
+                width: A.w,
+                height: A.h,
+                opacity: clamp01(aIn * 1.4) * sideAlpha,
+                transform: `translateY(${(1 - aIn) * -40}px) scale(${mix(0.86, 1, aIn) * sideScale}) rotate(${mix(-4, 0, aIn)}deg)`,
+                filter: "drop-shadow(0 20px 40px rgba(0,0,0,0.45))",
+              }}
+            >
+              <ScriptCard w={A.w} h={A.h} type={typeP} lit={1 - col} />
+            </div>
+          )}
+
+          {/* 出力パネル: いま聞こえている声で動く */}
           <div
             style={{
               position: "absolute",
@@ -380,20 +501,21 @@ export const Open: React.FC = () => {
               top: NODE_Y - Cn.h / 2,
               width: Cn.w,
               height: Cn.h,
-              opacity: cPanelIn * sideAlpha,
-              transform: `scale(${mix(0.94, 1, cPanelIn) * sideScale})`,
+              opacity: cIn * sideAlpha,
+              transform: `translateX(${(1 - cIn) * 60}px) scale(${sideScale})`,
             }}
           >
             <Panel
               w={Cn.w}
               h={Cn.h}
               accent={C.mint}
-              glow={live * (1 - col)}
+              glow={linked * (1 - col)}
               header="VOICE OUT"
-              status={live > 0 ? <span style={{ opacity: live }}>● LIVE</span> : <span style={{ color: C.dim }}>IDLE</span>}
+              status={live > 0 ? <span style={{ color: C.mint, opacity: live }}>● LIVE</span> : <span style={{ color: C.dim }}>IDLE</span>}
             >
               <div style={{ position: "absolute", left: 24, top: 56 + (Cn.h - 56) / 2 - 55, width: Cn.w - 48, height: 110 }}>
-                <SynthWave w={Cn.w - 48} h={110} t={t} live={live} level={level} />
+                <div style={{ position: "absolute", left: 0, top: 54.5, width: Cn.w - 48, height: 1, background: C.border }} />
+                <Oscilloscope width={Cn.w - 48} height={110} color={C.mint} gain={2.8} thickness={2.5} lines={["open-2"]} amount={live} glow={linked > 0.5} />
               </div>
             </Panel>
           </div>
@@ -401,8 +523,8 @@ export const Open: React.FC = () => {
           {/* ノードの名前 */}
           {[
             { cx: A_CX, en: "INPUT", ja: "台本", at: T_A },
-            { cx: CX, en: "ENGINE", ja: "演じる", at: T_B },
-            { cx: C_CX, en: "OUTPUT", ja: "声", at: T_C - 0.1 },
+            { cx: CX, en: "ENGINE", ja: "しゃべり手", at: T_B },
+            { cx: C_CX, en: "OUTPUT", ja: "声", at: T_C },
           ].map((n) => {
             const p = prog(t, n.at + 0.05, n.at + 0.4, ease.outQuint);
             return (
@@ -447,33 +569,6 @@ export const Open: React.FC = () => {
         </div>
       )}
 
-      {/* ================= 3: GOOGLE · NEW SPEECH MODEL ================= */}
-      {t >= T_LABEL - 0.1 && extrasOut < 1 && (
-        <div
-          style={{
-            position: "absolute",
-            left: 0,
-            width: W,
-            top: labelY,
-            height: 40,
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            gap: 16,
-            opacity: labelIn * (1 - extrasOut),
-            ...mono(28),
-            letterSpacing: "0.2em",
-          }}
-        >
-          <div style={{ width: 12, height: 12, borderRadius: 6, background: C.coral, boxShadow: `0 0 10px ${C.coral}` }} />
-          <div>
-            <span style={{ color: C.text }}>{typed("GOOGLE", labelType * 3.5)}</span>
-            {typed("  ·  NEW SPEECH MODEL", (labelType * 3.5 - 1) / 2.5)}
-            {labelType < 1 && <span style={{ color: C.coral }}>▌</span>}
-          </div>
-        </div>
-      )}
-
       {/* ================= 3-4: 製品名のテープ（→ セッション名） ================= */}
       {t >= T_TAPE && (
         <div
@@ -501,29 +596,46 @@ export const Open: React.FC = () => {
         </div>
       )}
 
-      {/* テープの下: セッション情報 */}
-      {metaIn > 0 && extrasOut < 1 && (
+      {/* テープの下: セッション情報（Googleの新しい音声モデル） */}
+      {t >= META[0] - 0.05 && extrasOut < 1 && (
         <div
           style={{
             position: "absolute",
             left: 0,
             width: W,
-            top: TAPE_Y + TAPE_H / 2 + 44,
+            top: META_Y,
             display: "flex",
             justifyContent: "center",
-            gap: 40,
-            ...mono(26, C.sub, 500),
-            opacity: metaIn * (1 - extrasOut),
-            transform: `translateY(${(1 - metaIn) * 12}px)`,
+            alignItems: "flex-start",
+            opacity: 1 - extrasOut,
           }}
         >
-          <span>
-            TYPE <span style={{ color: C.text, fontWeight: 700 }}>TEXT-TO-SPEECH</span>
-          </span>
-          <span style={{ color: C.dim }}>/</span>
-          <span>
-            RELEASED <span style={{ color: C.text, fontWeight: 700 }}>2026.09.23</span>
-          </span>
+          {META_ITEMS.map((m, i) => {
+            const p = prog(t, META[i], META[i] + 0.3, ease.outQuint);
+            const ty = prog(t, META[i] + 0.04, META[i] + 0.04 + 0.03 * m.v.length, ease.linear);
+            return (
+              <React.Fragment key={m.k}>
+                {i > 0 && (
+                  <div
+                    style={{
+                      width: 1.5,
+                      height: 62,
+                      margin: "0 36px",
+                      background: C.borderHi,
+                      opacity: p,
+                    }}
+                  />
+                )}
+                <div style={{ opacity: p, transform: `translateY(${(1 - p) * 10}px)` }}>
+                  <div style={{ ...mono(16, C.sub, 500), letterSpacing: "0.2em" }}>{m.k}</div>
+                  <div style={{ ...mono(32, C.text), letterSpacing: "0.1em", marginTop: 6, fontVariantNumeric: "tabular-nums" }}>
+                    {typed(m.v, ty)}
+                    <span style={{ opacity: 0 }}>{m.v.slice(typed(m.v, ty).length)}</span>
+                  </div>
+                </div>
+              </React.Fragment>
+            );
+          })}
         </div>
       )}
 
@@ -560,11 +672,11 @@ export const Open: React.FC = () => {
               display: "flex",
               alignItems: "center",
               gap: 14,
-              ...mono(15),
+              ...mono(16),
               opacity: prog(hm, 0.6, 1),
             }}
           >
-            SESSION
+            TONIGHT&apos;S SESSION
             <VoiceBars n={9} width={58} height={16} barWidth={3} color={C.mint} lines={["open-4"]} shape="flat" gain={1.2} />
           </div>
 
@@ -693,13 +805,16 @@ export const Open: React.FC = () => {
 
       {/* ================= 効果音 ================= */}
       <Sfx at={T_AIR} name="click" volume={0.18} />
-      <Sfx at={T_NOINPUT} name="tick" volume={0.16} />
+      <Sfx at={T_ROLL} name="tick" volume={0.2} />
+      <Sfx at={T_FOCUS} name="tick" volume={0.14} />
+      <Sfx at={T_NOINPUT} name="click" volume={0.16} />
+      <Sfx at={T_C} name="tick" volume={0.14} />
       <Sfx at={T_A} name="tick" volume={0.14} />
       <Sfx at={T_B} name="pop" volume={0.18} />
-      <Sfx at={T_C} name="tick" volume={0.14} />
       <Sfx at={T_TAPE} name="whoosh" volume={0.14} />
-      <Sfx at={T_TAPE + TAPE_DUR - 0.05} name="pop" volume={0.18} />
-      <Sfx at={T_NAME} name="chime" volume={0.2} />
+      <Sfx at={T_PRESS} name="pop" volume={0.18} />
+      <Sfx at={META[0]} name="type" volume={0.12} />
+      <Sfx at={T_FIVE} name="tick" volume={0.14} />
       {TRACKS.map((s, i) => (
         <Sfx key={s.id} at={T_LIT(i)} name="tick" volume={0.1} />
       ))}
@@ -707,3 +822,4 @@ export const Open: React.FC = () => {
     </SceneShell>
   );
 };
+

@@ -73,8 +73,9 @@ npm run tts
 npm run dev
 
 # 4) 書き出し
-npm run render     # → out/video.mp4（H.264 / AAC 192kbps / 1920×1080 / 30fps）
-npm run still      # → out/thumbnail.png（投稿のサムネイル候補）
+npm run render        # → out/video.mp4（H.264 / AAC 192kbps / 1920×1080 / 30fps）
+npm run render:final  # 公開用。声が Gemini になっていないと止まる（エンドクレジットの「声はGemini」を守るため）
+npm run still         # → out/thumbnail.png（冒頭の「誰もいない。」の画面。投稿のサムネイル候補）
 ```
 
 ## 台本・声を変えるには

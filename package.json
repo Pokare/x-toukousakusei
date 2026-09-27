@@ -9,9 +9,10 @@
     "tts": "node scripts/tts.mjs",
     "tts:placeholder": "node scripts/tts.mjs --provider openjtalk",
     "render": "remotion render src/index.ts Main out/video.mp4 --codec=h264 --crf=18 --audio-bitrate=192k --pixel-format=yuv420p --color-space=bt709",
-    "still": "remotion still src/index.ts Main out/thumbnail.png --frame=320",
-    "typecheck": "tsc --noEmit",
-    "sfx": "node scripts/make-sfx.mjs"
+    "render:final": "remotion render src/index.ts Main out/video.mp4 --codec=h264 --crf=18 --audio-bitrate=192k --pixel-format=yuv420p --color-space=bt709 --props=./scripts/final-props.json",
+    "still": "remotion still src/index.ts Main out/thumbnail.png --frame=10",
+    "sfx": "node scripts/make-sfx.mjs",
+    "typecheck": "tsc --noEmit"
   },
   "engines": {
     "node": ">=20"

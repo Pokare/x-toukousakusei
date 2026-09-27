@@ -19,7 +19,7 @@
     },
     "open-4": {
       "file": "voice/open-4.wav",
-      "duration": 3.85,
+      "duration": 3.21,
       "voice": "narrator"
     },
     "t1-1": {
@@ -89,7 +89,7 @@
     },
     "t3-4": {
       "file": "voice/t3-4.wav",
-      "duration": 2.38,
+      "duration": 2.7,
       "voice": "guest"
     },
     "t4-1": {

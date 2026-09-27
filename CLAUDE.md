@@ -8,7 +8,7 @@ Gemini 3.8 Flash TTS（ナレーション）× Remotion（映像）の解説動�
 2. `npm run tts -- --dry-run` で呼び出し計画（既定9回）を確認してから `npm run tts`
    - 無料枠は1日のリクエスト数が少ない。429 で止まったら翌日に再実行（生成済みの行はキャッシュされる）
    - 最後に「長さが不自然」な行が警告されたら `npm run tts -- --only <id,...> --per-line`
-3. `npm run render` → `out/video.mp4` を確認
+3. `npm run render:final` → `out/video.mp4` を確認（仮音声のままだとエラーで止まる）
 4. `public/voice/` の変更をコミット（`.env*` と `out/` はコミットしない）
 
 ## 実装ルール

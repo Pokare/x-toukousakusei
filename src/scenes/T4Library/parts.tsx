@@ -1,41 +1,10 @@
-// TRACK 04 専用の小物: フレーズ検出、色の補間、テープカウンター風の数字、棚のテープ、LED ウォール、声のレベル
+// TRACK 04 専用の小物: 色の補間、テープカウンター風の数字、棚のテープの背、LED ウォール、声のレベル
 import React from "react";
 import { C, DISPLAY, FPS, MONO } from "../../theme";
 import { LEVELS, line } from "../../timeline";
 import { clamp01, rand } from "../../time";
 
-// ───────── 音声から行内のフレーズの区切りを見つける ─────────
 const rmsOf = (id: string) => LEVELS.lines[id]?.rms ?? [];
-
-/**
- * 行 id を、いちばん長い無音 n-1 か所で n 個のフレーズに分けたときの各フレーズの話し始め（絶対秒）。
- * 声を差し替えても間の位置から自動で合う。見つからなければ fallback（行内の割合）を使う。
- */
-export const phraseStarts = (id: string, n: number, fallback: number[]): number[] => {
-  const l = line(id);
-  const r = rmsOf(id);
-  const thr = 0.06;
-  const minRun = 4; // 0.13 秒以上の無音だけを区切りとみなす
-  const first = r.findIndex((v) => v >= thr);
-  const fb = fallback.map((f) => l.start + l.dur * f);
-  if (first < 0) return fb;
-  const runs: { a: number; b: number }[] = [];
-  let s = -1;
-  for (let k = first; k <= r.length; k++) {
-    const silent = k === r.length || r[k] < thr;
-    if (silent && s < 0) s = k;
-    if (!silent && s >= 0) {
-      if (k - s >= minRun && k < r.length) runs.push({ a: s, b: k });
-      s = -1;
-    }
-  }
-  if (runs.length < n - 1) return fb;
-  const cuts = [...runs]
-    .sort((p, q) => q.b - q.a - (p.b - p.a))
-    .slice(0, n - 1)
-    .sort((p, q) => p.a - q.a);
-  return [first, ...cuts.map((c) => c.b)].map((k) => l.start + k / FPS);
-};
 
 // ───────── 色 ─────────
 const hex = (h: string) => [1, 3, 5].map((i) => parseInt(h.slice(i, i + 2), 16));
@@ -147,22 +116,32 @@ export const TapeCounter: React.FC<{
   );
 };
 
-// ───────── 棚に並ぶテープの背（t4-1 の予告。あとで LED の 30 粒に縮む） ─────────
+// ───────── 棚に並ぶテープの背（t4-1。あとで LED の 30 粒に縮む） ─────────
+// ケースの背: 白いラベルに縦書きのタイトル（細い線）と、下に小さな番号札。大きさに比例して描く
 export const Spine: React.FC<{ w: number; h: number; seed: number }> = ({ w, h, seed }) => {
-  // ケースの背: 白いラベルに縦書きのタイトル（細い線）と、下に小さな番号札
-  const labTop = 6;
-  const labH = h - 26;
-  const title = 0.45 + rand(seed * 5.1) * 0.4;
+  const inset = Math.max(3, w * 0.16);
+  const labTop = inset + 2;
+  const labH = h * 0.7;
+  const title = 0.4 + rand(seed * 5.1) * 0.45;
+  const paper = 0.6 + rand(seed * 2.7) * 0.26; // ラベルの紙の白さは 1 本ずつ少し違う
+  const bar = Math.max(2.4, w * 0.13);
   return (
     <svg width={w} height={h} style={{ overflow: "visible", display: "block" }}>
       <rect x={0.75} y={0.75} width={w - 1.5} height={h - 1.5} rx={3} fill={C.panelHi} stroke={C.borderHi} strokeWidth={1.5} />
-      <rect x={3.5} y={labTop} width={w - 7} height={labH} rx={1.5} fill={C.text} opacity={0.86} />
-      <rect x={w / 2 - 1.2} y={labTop + 5} width={2.4} height={(labH - 10) * title} rx={1.2} fill={C.ink} opacity={0.55} />
-      <rect x={3.5} y={h - 15} width={w - 7} height={3} rx={1} fill={C.sub} opacity={0.55} />
-      <circle cx={w / 2} cy={h - 7} r={2} fill={C.sub} />
+      <rect x={inset} y={labTop} width={w - inset * 2} height={labH} rx={1.5} fill={C.text} opacity={paper} />
+      <rect x={w / 2 - bar / 2} y={labTop + 7} width={bar} height={(labH - 14) * title} rx={bar / 2} fill={C.ink} opacity={0.5} />
+      <rect x={inset} y={labTop + labH + (h - labTop - labH) * 0.3} width={w - inset * 2} height={3} rx={1} fill={C.sub} opacity={0.55} />
+      <circle cx={w / 2} cy={h - Math.max(7, (h - labTop - labH) * 0.32)} r={Math.max(2, w * 0.1)} fill={C.sub} />
     </svg>
   );
 };
+
+/** 空いた棚の区画（点線の枠） */
+export const EmptySlot: React.FC<{ w: number; h: number }> = ({ w, h }) => (
+  <svg width={w} height={h} style={{ overflow: "visible", display: "block" }}>
+    <rect x={0.75} y={0.75} width={w - 1.5} height={h - 1.5} rx={3} fill="rgba(255,255,255,0.025)" stroke={C.sub} strokeOpacity={0.55} strokeWidth={1.5} strokeDasharray="5 5" />
+  </svg>
+);
 
 // ───────── 2000 粒の LED ウォール ─────────
 export const WALL = { cols: 100, rows: 20, pitchX: 10.04, pitchY: 9, cellW: 7.3, cellH: 6.2 };
@@ -214,7 +193,9 @@ export const LedWall: React.FC<{
   /** 0〜1: 波形の模様の濃さ（0 なら一様に点灯） */
   waveAmt?: number;
   dim?: number;
-}> = ({ gridIn, seedOn, count, flashWidth = 160, flashAmt = 1, sweep = -1, wave, waveAmt = 1, dim = 0 }) => {
+  /** ウォール内の座標 (x, y) から広がる輪（半径 r）が通ったセルを一瞬明るくする */
+  ripple?: { x: number; y: number; r: number; amt: number } | null;
+}> = ({ gridIn, seedOn, count, flashWidth = 160, flashAmt = 1, sweep = -1, wave, waveAmt = 1, dim = 0, ripple = null }) => {
   return (
     <svg width={WALL_W} height={WALL_H} style={{ overflow: "visible", display: "block" }}>
       {CELLS.map((cell, i) => {
@@ -243,6 +224,12 @@ export const LedWall: React.FC<{
             op = Math.max(op, 0.86 + 0.14 * s);
           }
         }
+        let rip = 0;
+        if (ripple && ripple.amt > 0 && cell.rank >= SEED && cell.rank < count) {
+          const d = Math.hypot(cell.x + WALL.cellW / 2 - ripple.x, cell.y + WALL.cellH / 2 - ripple.y);
+          rip = Math.exp(-((d - ripple.r) ** 2) / 260) * ripple.amt;
+          if (rip > 0.02) fill = lerpColor(fill.startsWith("#") ? fill : C.coral, "#FFE4D6", rip * 0.75);
+        }
         return (
           <rect
             key={i}
@@ -252,7 +239,7 @@ export const LedWall: React.FC<{
             height={WALL.cellH}
             rx={1.6}
             fill={fill}
-            opacity={appear * op * (1 - dim)}
+            opacity={appear * Math.min(1, op * (1 - dim) + rip * 0.7)}
           />
         );
       })}
@@ -261,6 +248,17 @@ export const LedWall: React.FC<{
 };
 
 // ───────── 声のレベル ─────────
+/** 行 id の、絶対時刻 sec での音量（フレームの間は直線でつなぐ。行の外は 0） */
+export const rmsLerp = (id: string, sec: number) => {
+  const l = line(id);
+  const r = rmsOf(id);
+  const k = (sec - l.start) * FPS;
+  if (k < 0 || k > r.length - 1) return 0;
+  const i = Math.floor(k);
+  const f = k - i;
+  return (r[i] ?? 0) * (1 - f) + (r[i + 1] ?? r[i] ?? 0) * f;
+};
+
 /** 時刻 sec に話している t4 の行の音量（0〜1）。行間は 0 */
 export const rmsAtTime = (ids: string[], sec: number) => {
   for (const id of ids) {

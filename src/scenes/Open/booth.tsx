@@ -1,5 +1,5 @@
 // 冒頭の「誰もいないボーカルブース」: 吸音材の壁、ON AIR ランプ、マイク（ポップガード付き）、
-// スポットライトの当たった空のスツール、入力のないマイクのメーター。
+// スポットライトの当たった空のスツール、話の焦点を示すフォーカス枠。
 import React from "react";
 import { C, MONO } from "../../theme";
 import { mixColor, withAlpha } from "./parts";
@@ -46,12 +46,67 @@ const FoamWall: React.FC = () => {
   );
 };
 
+export type Focus = { x: number; y: number; w: number; h: number; label: string; op: number; hot: number };
+
+/** 撮影のフォーカス枠のような四隅の括弧（ブースの座標系） */
+const FocusBracket: React.FC<{ f: Focus }> = ({ f }) => {
+  if (f.op <= 0) return null;
+  const L = 30;
+  const col = mixColor(C.text, C.coral, f.hot);
+  const corners = [
+    [f.x, f.y, 1, 1],
+    [f.x + f.w, f.y, -1, 1],
+    [f.x, f.y + f.h, 1, -1],
+    [f.x + f.w, f.y + f.h, -1, -1],
+  ];
+  return (
+    <>
+      <svg width={BOOTH_W} height={BOOTH_H} style={{ position: "absolute", left: 0, top: 0, overflow: "visible", opacity: f.op }}>
+        {corners.map(([x, y, dx, dy], i) => (
+          <path
+            key={i}
+            d={`M${x} ${y + dy * L} V${y} H${x + dx * L}`}
+            fill="none"
+            stroke={col}
+            strokeWidth={3.5}
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            style={{ filter: `drop-shadow(0 0 ${6 * f.hot}px ${withAlpha(C.coral, 0.7 * f.hot)})` }}
+          />
+        ))}
+      </svg>
+      <div
+        style={{
+          position: "absolute",
+          left: f.x,
+          top: f.y - 38,
+          height: 28,
+          padding: "0 9px",
+          display: "flex",
+          alignItems: "center",
+          borderRadius: 5,
+          background: col,
+          color: C.ink,
+          fontFamily: MONO,
+          fontWeight: 700,
+          fontSize: 18,
+          letterSpacing: "0.16em",
+          whiteSpace: "nowrap",
+          opacity: f.op,
+        }}
+      >
+        {f.label}
+      </div>
+    </>
+  );
+};
+
 /**
  * onAir: ON AIR ランプの明るさ（0〜1）。
  * spot: スツールに当たるスポットライトの明るさ（0〜1）。
- * noInput: 「NO INPUT」表示の出現（0〜1）。
+ * focus: マイク／空いた場所を指すフォーカス枠。
  */
-export const Booth: React.FC<{ onAir: number; spot: number; noInput: number }> = ({ onAir, spot, noInput }) => {
+export const Booth: React.FC<{ onAir: number; spot: number; focus?: Focus }> = ({ onAir, spot, focus }) => {
   const stoolX = 150;
   const micX = 404;
   const lampCol = mixColor("#3A2522", C.red, onAir);
@@ -194,49 +249,7 @@ export const Booth: React.FC<{ onAir: number; spot: number; noInput: number }> =
         <div key={d} style={{ position: "absolute", left: BOOTH_W / 2 + d * 110 - 1, top: 0, width: 2, height: 18, background: C.borderHi }} />
       ))}
 
-      {/* マイクの入力メーター: 入力なし */}
-      <div
-        style={{
-          position: "absolute",
-          left: 40,
-          top: FLOOR_Y + 30,
-          height: 34,
-          display: "flex",
-          alignItems: "center",
-          gap: 14,
-          fontFamily: MONO,
-          fontWeight: 700,
-          fontSize: 18,
-          letterSpacing: "0.14em",
-          color: C.sub,
-          whiteSpace: "nowrap",
-        }}
-      >
-        MIC 1
-        <div style={{ display: "flex", gap: 4 }}>
-          {Array.from({ length: 10 }, (_, k) => (
-            <div key={k} style={{ width: 14, height: 12, borderRadius: 2, background: "rgba(255,255,255,0.07)" }} />
-          ))}
-        </div>
-        <span style={{ color: C.dim }}>-∞ dB</span>
-        <div
-          style={{
-            height: 32,
-            padding: "0 12px",
-            display: "flex",
-            alignItems: "center",
-            borderRadius: 6,
-            border: `1.5px solid ${C.coral}`,
-            background: C.coralSoft,
-            color: C.coral,
-            fontSize: 17,
-            opacity: noInput,
-            transform: `translateX(${(1 - noInput) * -10}px)`,
-          }}
-        >
-          NO INPUT
-        </div>
-      </div>
+      {focus && <FocusBracket f={focus} />}
     </div>
   );
 };

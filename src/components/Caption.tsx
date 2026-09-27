@@ -21,6 +21,10 @@ const CaptionLine: React.FC<{ line: Line; t: number; opacity: number; lift: numb
   const done = prog(t, line.end, line.end + 0.3, ease.inOut);
   const tag = VOICE_TAG[line.voice];
   const accent = tag?.color ?? C.coral;
+  // 長い行は左右の余白(96px)に収まるよう文字を小さくする（全角=1、英数字=0.6 文字として概算）
+  const units = [...line.text].reduce((a, ch) => a + (/[\x20-\x7E]/.test(ch) ? 0.6 : 1), 0);
+  const avail = 1920 - 96 * 2 - (tag ? tag.label.length * 14 + 60 : 0);
+  const fontSize = Math.min(48, Math.floor(avail / (units * 1.02)));
   return (
     <div
       style={{
@@ -55,8 +59,8 @@ const CaptionLine: React.FC<{ line: Line; t: number; opacity: number; lift: numb
           style={{
             fontFamily: FONT,
             fontWeight: 700,
-            fontSize: 48,
-            lineHeight: "60px",
+            fontSize,
+            lineHeight: `${Math.round(fontSize * 1.25)}px`,
             letterSpacing: "0.02em",
             fontFeatureSettings: '"palt"',
             color: interpolateColors(done, [0, 1], [C.text, C.sub]),
@@ -107,15 +111,16 @@ export const Caption: React.FC = () => {
   const cur = sec.lines[idx];
   const prev = idx > 0 ? sec.lines[idx - 1] : null;
 
-  const pop = prog(t, cur.start - 0.02, cur.start + 0.22, ease.outQuint);
+  // 前の行が抜けきってから次の行が出る（重なって読めない瞬間を作らない）
+  const pop = prog(t, cur.start + (prev ? 0.08 : -0.02), cur.start + 0.28, ease.outQuint);
   const exit = last ? 1 : 1 - prog(t, hideAt - 0.15, hideAt);
   // 前の行は 0.14 秒かけて上へ抜ける
-  const prevOut = prev ? prog(t, cur.start - 0.02, cur.start + 0.14, ease.out) : 1;
+  const prevOut = prev ? prog(t, cur.start - 0.02, cur.start + 0.1, ease.out) : 1;
 
   return (
     <AbsoluteFill style={{ justifyContent: "flex-end", alignItems: "center", pointerEvents: "none" }}>
       <div style={{ marginBottom: 58, display: "grid", opacity: exit }}>
-        {prev && prevOut < 1 && <CaptionLine line={prev} t={t} opacity={1 - prevOut} lift={-10 * prevOut} />}
+        {prev && prevOut < 1 && <CaptionLine line={prev} t={t} opacity={1 - prevOut} lift={-26 * prevOut} />}
         <CaptionLine line={cur} t={t} opacity={pop} lift={(1 - pop) * 14} />
       </div>
     </AbsoluteFill>
