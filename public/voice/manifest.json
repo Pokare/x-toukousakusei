@@ -1,0 +1,181 @@
+{
+  "provider": "openjtalk",
+  "model": "open_jtalk/mei",
+  "lines": {
+    "intro-1": {
+      "file": "voice/intro-1.wav",
+      "duration": 1.72,
+      "voice": "narrator"
+    },
+    "intro-2": {
+      "file": "voice/intro-2.wav",
+      "duration": 1.39,
+      "voice": "narrator"
+    },
+    "intro-3": {
+      "file": "voice/intro-3.wav",
+      "duration": 2.67,
+      "voice": "narrator"
+    },
+    "intro-4": {
+      "file": "voice/intro-4.wav",
+      "duration": 3.1,
+      "voice": "narrator"
+    },
+    "intro-5": {
+      "file": "voice/intro-5.wav",
+      "duration": 1.09,
+      "voice": "narrator"
+    },
+    "intro-6": {
+      "file": "voice/intro-6.wav",
+      "duration": 1.74,
+      "voice": "narrator"
+    },
+    "s1-1": {
+      "file": "voice/s1-1.wav",
+      "duration": 1.94,
+      "voice": "narrator"
+    },
+    "s1-2": {
+      "file": "voice/s1-2.wav",
+      "duration": 2.12,
+      "voice": "narrator"
+    },
+    "s1-3": {
+      "file": "voice/s1-3.wav",
+      "duration": 2.49,
+      "voice": "narrator"
+    },
+    "s1-4": {
+      "file": "voice/s1-4.wav",
+      "duration": 2.07,
+      "voice": "narrator"
+    },
+    "s1-5": {
+      "file": "voice/s1-5.wav",
+      "duration": 3.76,
+      "voice": "narrator"
+    },
+    "s2-1": {
+      "file": "voice/s2-1.wav",
+      "duration": 2.92,
+      "voice": "narrator"
+    },
+    "s2-2": {
+      "file": "voice/s2-2.wav",
+      "duration": 2.72,
+      "voice": "whisper"
+    },
+    "s2-3": {
+      "file": "voice/s2-3.wav",
+      "duration": 1.71,
+      "voice": "laugh"
+    },
+    "s2-4": {
+      "file": "voice/s2-4.wav",
+      "duration": 2.15,
+      "voice": "sigh"
+    },
+    "s2-5": {
+      "file": "voice/s2-5.wav",
+      "duration": 1.84,
+      "voice": "narrator"
+    },
+    "s2-6": {
+      "file": "voice/s2-6.wav",
+      "duration": 2.42,
+      "voice": "narrator"
+    },
+    "s3-1": {
+      "file": "voice/s3-1.wav",
+      "duration": 1.72,
+      "voice": "narrator"
+    },
+    "s3-2": {
+      "file": "voice/s3-2.wav",
+      "duration": 3.43,
+      "voice": "narrator"
+    },
+    "s3-3": {
+      "file": "voice/s3-3.wav",
+      "duration": 3.2,
+      "voice": "narrator"
+    },
+    "s3-4": {
+      "file": "voice/s3-4.wav",
+      "duration": 2.1,
+      "voice": "designed"
+    },
+    "s4-1": {
+      "file": "voice/s4-1.wav",
+      "duration": 2.13,
+      "voice": "narrator"
+    },
+    "s4-2": {
+      "file": "voice/s4-2.wav",
+      "duration": 2,
+      "voice": "narrator"
+    },
+    "s4-3": {
+      "file": "voice/s4-3.wav",
+      "duration": 2.73,
+      "voice": "speakerB"
+    },
+    "s4-4": {
+      "file": "voice/s4-4.wav",
+      "duration": 4.06,
+      "voice": "speakerA"
+    },
+    "s4-5": {
+      "file": "voice/s4-5.wav",
+      "duration": 1.9,
+      "voice": "narrator"
+    },
+    "s4-6": {
+      "file": "voice/s4-6.wav",
+      "duration": 1.83,
+      "voice": "narrator"
+    },
+    "s5-1": {
+      "file": "voice/s5-1.wav",
+      "duration": 3.28,
+      "voice": "narrator"
+    },
+    "s5-2": {
+      "file": "voice/s5-2.wav",
+      "duration": 3.19,
+      "voice": "narrator"
+    },
+    "s5-3": {
+      "file": "voice/s5-3.wav",
+      "duration": 2.96,
+      "voice": "narrator"
+    },
+    "s5-4": {
+      "file": "voice/s5-4.wav",
+      "duration": 2.13,
+      "voice": "narrator"
+    },
+    "s5-5": {
+      "file": "voice/s5-5.wav",
+      "duration": 1.46,
+      "voice": "narrator"
+    },
+    "outro-1": {
+      "file": "voice/outro-1.wav",
+      "duration": 2.97,
+      "voice": "narrator"
+    },
+    "outro-2": {
+      "file": "voice/outro-2.wav",
+      "duration": 2.35,
+      "voice": "narrator"
+    },
+    "outro-3": {
+      "file": "voice/outro-3.wav",
+      "duration": 0.89,
+      "voice": "narrator"
+    }
+  }
+}

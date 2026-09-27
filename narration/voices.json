@@ -1,0 +1,86 @@
+{
+  "_comment": "声の設定。gemini.voice は Gemini の既成ボイス名（Kore, Aoede, Gacrux など）か、AI Studio で作ったカスタムボイスID（voice_...）。style は演技指示で、読み上げられない。gainDb は仕上がり音量の上げ下げ（ささやきを小さく等）。openjtalk は APIキーなしで試すための仮音声。",
+  "gemini": {
+    "model": "gemini-3.8-flash-tts",
+    "languageCode": "ja"
+  },
+  "voices": {
+    "narrator": {
+      "gainDb": 0.0,
+      "gemini": {
+        "voice": "Aoede",
+        "style": "明るく聞き取りやすい日本語の解説ナレーター。テンポよく、自信を持って、でも押しつけがましくなく。語尾は自然に下げ、読点では短く間を取る。"
+      },
+      "openjtalk": {
+        "halfTone": 1.0,
+        "speed": 1.08
+      }
+    },
+    "whisper": {
+      "gainDb": -7.0,
+      "gemini": {
+        "voice": "Aoede",
+        "style": "ささやき声で。耳元で秘密を打ち明けるように、息を多めに混ぜて小声でゆっくり話す。"
+      },
+      "openjtalk": {
+        "halfTone": 0.0,
+        "speed": 0.95
+      }
+    },
+    "laugh": {
+      "gainDb": 0.0,
+      "gemini": {
+        "voice": "Aoede",
+        "style": "冒頭の「あはは」は本当に吹き出すように笑う。そのあと笑いをこらえながら、半信半疑で楽しそうに聞き返す。"
+      },
+      "openjtalk": {
+        "halfTone": 2.0,
+        "speed": 1.1
+      }
+    },
+    "sigh": {
+      "gainDb": -3.0,
+      "gemini": {
+        "voice": "Aoede",
+        "style": "深く長いため息から始める。疲れてうんざりした調子で、力なくゆっくりつぶやく。"
+      },
+      "openjtalk": {
+        "halfTone": -1.0,
+        "speed": 0.85
+      }
+    },
+    "designed": {
+      "gainDb": 0.0,
+      "gemini": {
+        "voice": "Gacrux",
+        "style": "落ち着いた40代の女性ナレーター。低めで柔らかい声。ドキュメンタリー番組のように、ゆったりと温かく語る。"
+      },
+      "openjtalk": {
+        "halfTone": -3.0,
+        "speed": 0.95
+      }
+    },
+    "speakerA": {
+      "gainDb": 0.0,
+      "gemini": {
+        "voice": "Leda",
+        "style": "明るい女性。少し得意げに、にこやかに種明かしをするように話す。"
+      },
+      "openjtalk": {
+        "halfTone": 1.5,
+        "speed": 1.05
+      }
+    },
+    "speakerB": {
+      "gainDb": 0.0,
+      "gemini": {
+        "voice": "Puck",
+        "style": "若い男性。本気で驚いて、目を丸くしながら聞き返す。"
+      },
+      "openjtalk": {
+        "halfTone": -5.0,
+        "speed": 1.1
+      }
+    }
+  }
+}

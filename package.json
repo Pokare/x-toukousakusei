@@ -1,0 +1,33 @@
+{
+  "name": "gemini-tts-opus-video",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Gemini 3.8 Flash TTS × Claude Opus 5.5 で作る解説動画（Remotion）",
+  "type": "module",
+  "scripts": {
+    "dev": "remotion studio src/index.ts",
+    "tts": "node scripts/tts.mjs",
+    "tts:placeholder": "node scripts/tts.mjs --provider openjtalk",
+    "render": "remotion render src/index.ts Main out/video.mp4 --codec=h264 --crf=18 --audio-bitrate=192k --pixel-format=yuv420p",
+    "still": "remotion still src/index.ts Main out/thumbnail.png --frame=330",
+    "typecheck": "tsc --noEmit",
+    "sfx": "node scripts/make-sfx.mjs"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "@expo-google-fonts/noto-sans-jp": "^0.4.3",
+    "@remotion/cli": "^4.0.529",
+    "@remotion/fonts": "^4.0.529",
+    "@remotion/media-utils": "^4.0.529",
+    "react": "^19.3.0",
+    "react-dom": "^19.3.0",
+    "remotion": "^4.0.529"
+  },
+  "devDependencies": {
+    "@types/node": "^22.20.4",
+    "@types/react": "^19.3.0",
+    "typescript": "^5.9.3"
+  }
+}
