@@ -1,6 +1,6 @@
 # このリポジトリについて
 
-Gemini 3.8 Flash TTS（ナレーション）× Remotion（映像）の解説動画プロジェクト。詳細は README.md。
+Gemini 3.8 Flash TTS（ナレーション）× Remotion（映像）の解説動画プロジェクト「深夜の録音スタジオ」。詳細は README.md。
 
 ## Gemini の声に差し替える手順（GEMINI_API_KEY がある環境で）
 
@@ -16,3 +16,4 @@ Gemini 3.8 Flash TTS（ナレーション）× Remotion（映像）の解説動�
 - 演出のタイミングは `line(id).start / end` など台本の行を基準に書く（秒の直書きはしない）
 - シーン単体の確認は `npx remotion still src/dev/<scene>.tsx Scene out.png --frame=N`
 - APIキーはログやファイルに出さない
+- デザインは src/theme.ts のトークン（C / DISPLAY / FONT / MONO）だけを使う。参考にした動画の配色・レイアウトは使わない
