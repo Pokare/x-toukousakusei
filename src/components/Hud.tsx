@@ -24,7 +24,6 @@ export const Hud: React.FC = () => {
   const stopped = t > TOTAL_SEC - 0.9;
   const blink = stopped ? 0.15 : 0.55 + 0.45 * Math.cos(t * Math.PI * 2 * 0.8);
   const rail = 1920 - PAD_X * 2;
-  const trackIdx = TL.sections.filter((s) => s.label.startsWith("TRACK"));
 
   return (
     <AbsoluteFill style={{ pointerEvents: "none", opacity: enter }}>
@@ -64,8 +63,8 @@ export const Hud: React.FC = () => {
         {cur.title && (
           <div style={{ fontFamily: FONT, fontWeight: 700, fontSize: 24, color: C.text }}>{cur.title}</div>
         )}
-        <div style={{ fontFamily: MONO, fontWeight: 700, fontSize: 22, color: C.coral, letterSpacing: "0.14em" }}>
-          {cur.label.startsWith("TRACK") ? `${cur.label} / ${String(trackIdx.length).padStart(2, "0")}` : cur.label}
+        <div style={{ fontFamily: MONO, fontWeight: 700, fontSize: 22, color: stopped ? C.dim : C.coral, letterSpacing: "0.14em" }}>
+          {stopped && cur.label === "ON AIR" ? "OFF AIR" : cur.label}
         </div>
       </div>
 

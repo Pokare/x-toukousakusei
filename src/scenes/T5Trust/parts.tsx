@@ -1,4 +1,4 @@
-// TRACK 05 専用の小物: 音声解析ヘルパー、ラックユニットの枠、ネジ、スイッチ、鍵、表彰ロゼット
+// TRACK 05 専用の小物: 音声解析ヘルパー、ラックユニットの枠、ネジ、署名の線、パタパタ表示（スプリットフラップ）
 import React from "react";
 import { C, FPS, MONO } from "../../theme";
 import { LEVELS, line } from "../../timeline";
@@ -92,13 +92,6 @@ export const mixHex = (a: string, b: string, p: number) => {
 };
 
 export type Rect = { x: number; y: number; w: number; h: number };
-export const mixRect = (a: Rect, b: Rect, p: number): Rect => ({
-  x: mix(a.x, b.x, p),
-  y: mix(a.y, b.y, p),
-  w: mix(a.w, b.w, p),
-  h: mix(a.h, b.h, p),
-});
-
 // ───────── ラックユニット ─────────
 /** ラックに積んだ機材の枠（中身は children。枠だけを動かして縮められる） */
 export const RackFrame: React.FC<{
@@ -216,15 +209,6 @@ export const IconShieldCheck: React.FC<IP & { check?: number }> = ({ size = 32, 
   </svg>
 );
 
-/** 南京錠。open=0 で閉、1 で開 */
-export const IconLock: React.FC<IP & { open?: number }> = ({ size = 32, color = C.sub, sw = 1.8, open = 0 }) => (
-  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth={sw} strokeLinecap="round" strokeLinejoin="round" style={{ overflow: "visible" }}>
-    <rect x="5" y="10.5" width="14" height="10" rx="2.2" />
-    <path d={`M8 10.5V7.5a4 4 0 0 1 8 0v${(3 * (1 - open)).toFixed(2)}`} transform={`translate(0 ${(-2.4 * open).toFixed(2)})`} />
-    <path d="M12 14.5v2.5" />
-  </svg>
-);
-
 /** 描き込まれるチェック（viewBox 24） */
 export const CheckDraw: React.FC<{ size: number; color: string; sw?: number; p: number }> = ({ size, color, sw = 3, p }) => (
   <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth={sw} strokeLinecap="round" strokeLinejoin="round" style={{ overflow: "visible" }}>
@@ -232,117 +216,132 @@ export const CheckDraw: React.FC<{ size: number; color: string; sw?: number; p: 
   </svg>
 );
 
-// ───────── スライドスイッチ ─────────
-/** on: 0→1 でつまみが右へ・台がミントに。check: つまみの中のチェックの描画量 */
-export const Toggle: React.FC<{ on: number; check: number; w?: number; h?: number }> = ({ on, check, w = 140, h = 66 }) => {
-  const pad = 7;
-  const k = h - pad * 2;
-  const kx = mix(pad, w - pad - k, on);
-  const onC = clamp01(on);
-  return (
-    <div style={{ position: "relative", width: w, height: h }}>
-      {/* 台（OFF: 暗い溝 / ON: ミント） */}
-      <div
-        style={{
-          position: "absolute",
-          inset: 0,
-          borderRadius: h / 2,
-          background: "#0A0C10",
-          border: `1.5px solid ${C.borderHi}`,
-          boxSizing: "border-box",
-          boxShadow: "inset 0 3px 8px rgba(0,0,0,0.6)",
-        }}
-      />
-      <div
-        style={{
-          position: "absolute",
-          inset: 0,
-          borderRadius: h / 2,
-          background: C.mint,
-          opacity: onC,
-          boxShadow: `0 0 ${28 * onC}px ${C.mint}88`,
-        }}
-      />
-      {/* 台の文字 */}
-      <div
-        style={{
-          position: "absolute",
-          top: 0,
-          height: h,
-          left: w - pad - k - 2,
-          width: k,
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          fontFamily: MONO,
-          fontWeight: 700,
-          fontSize: 15,
-          letterSpacing: "0.1em",
-          color: C.dim,
-          opacity: 1 - onC,
-        }}
-      >
-        OFF
-      </div>
-      <div
-        style={{
-          position: "absolute",
-          top: 0,
-          height: h,
-          left: pad + 2,
-          width: k,
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          fontFamily: MONO,
-          fontWeight: 700,
-          fontSize: 15,
-          letterSpacing: "0.1em",
-          color: C.ink,
-          opacity: onC,
-        }}
-      >
-        ON
-      </div>
-      {/* つまみ */}
-      <div
-        style={{
-          position: "absolute",
-          left: kx,
-          top: pad,
-          width: k,
-          height: k,
-          borderRadius: k / 2,
-          background: onC > 0.5 ? C.ink : "#5A6272",
-          boxShadow: "0 3px 8px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.12)",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      >
-        <CheckDraw size={k * 0.62} color={C.mint} sw={3.2} p={check} />
-      </div>
-    </div>
-  );
+
+// ───────── 署名（手書き風の 1 本線） ─────────
+/**
+ * 筆記体のサインのような点列を返す（原点 = 書き出しのベースライン、y は上向きが負）。
+ * ループの高さを変えて「大文字 → 小文字」の抑揚をつけ、最後に下へ払う。
+ * 途中まで描くときは点列の先頭 k 個だけを使えば、ペン先の位置もそのまま分かる。
+ */
+const SIG_H = [1.0, 0.42, 0.5, 0.95, 0.4, 0.36, 0.8, 0.42];
+export const signaturePoints = (w: number, h: number, n = 260): [number, number][] => {
+  const N = SIG_H.length;
+  const hAt = (u: number) => {
+    const f = u * N - 0.5;
+    const i = Math.max(0, Math.min(N - 2, Math.floor(f)));
+    let k = clamp01(f - i);
+    k = k * k * (3 - 2 * k);
+    return mix(SIG_H[i], SIG_H[i + 1], k);
+  };
+  const pts: [number, number][] = [];
+  const R = w * 0.034;
+  for (let i = 0; i <= n; i++) {
+    const u = i / n;
+    const ph = Math.PI * 2 * N * u;
+    const y = -h * (0.5 - 0.5 * Math.cos(ph)) * hAt(u);
+    pts.push([w * u + R * Math.sin(ph) - y * 0.32, y]);
+  }
+  const [x1, y1] = pts[pts.length - 1];
+  const m = Math.round(n * 0.27);
+  for (let j = 1; j <= m; j++) {
+    const v = j / m;
+    pts.push([x1 + w * 0.07 * Math.sin(Math.PI * v * 0.6) - (w + 10) * Math.pow(v, 1.5), y1 + h * 0.24 * Math.sin(Math.PI * v) + h * 0.15 * v]);
+  }
+  return pts;
 };
 
-// ───────── 表彰ロゼット（#1 総合） ─────────
-export const Rosette: React.FC<{ r: number; ring?: number }> = ({ r, ring = 0 }) => {
-  const n = 32;
-  const pts: string[] = [];
-  for (let i = 0; i < n * 2; i++) {
-    const a = (i / (n * 2)) * Math.PI * 2 - Math.PI / 2;
-    const rr = i % 2 === 0 ? r : r * 0.9;
-    pts.push(`${(r + rr * Math.cos(a)).toFixed(2)},${(r + rr * Math.sin(a)).toFixed(2)}`);
-  }
+export const pointsToPath = (pts: [number, number][]) =>
+  pts.map(([x, y], i) => `${i === 0 ? "M" : "L"}${x.toFixed(1)} ${y.toFixed(1)}`).join(" ");
+
+// ───────── パタパタ表示（スプリットフラップ）の 1 枚 ─────────
+/**
+ * seq[i] の文字へ at[i] 秒にめくれはじめる（at[0] は使わない）。dur 秒で 1 回めくれ終わる。
+ * 上半分の羽根が手前へ倒れ（0→-90°）、続いて新しい文字の下半分が降りてくる（90→0°）。
+ */
+export const FlapTile: React.FC<{
+  t: number;
+  seq: string[];
+  at: number[];
+  w: number;
+  h: number;
+  dur?: number;
+  font: string;
+  size: number;
+  weight?: number;
+  color: string;
+  dy?: number; // 字面の上下の微調整（px）
+  radius?: number;
+  glow?: number; // 0〜1: 着地後の光
+  glowColor?: string;
+}> = ({ t, seq, at, w, h, dur = 0.08, font, size, weight = 400, color, dy = 0, radius = 8, glow = 0, glowColor = C.coral }) => {
+  let k = 0;
+  for (let i = 1; i < seq.length; i++) if (t >= at[i]) k = i;
+  const cur = seq[k];
+  const prev = k > 0 ? seq[k - 1] : cur;
+  const f = k > 0 ? clamp01((t - at[k]) / dur) : 1;
+  const hh = h / 2;
+  const topBg = "linear-gradient(180deg, #232935 0%, #1A1F28 100%)";
+  const botBg = "linear-gradient(180deg, #161A21 0%, #12151B 100%)";
+  const glyph = (ch: string, top: boolean) => (
+    <div
+      style={{
+        position: "absolute",
+        left: 0,
+        top: top ? 0 : -hh,
+        width: w,
+        height: h,
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        fontFamily: font,
+        fontWeight: weight,
+        fontSize: size,
+        lineHeight: 1,
+        color,
+        transform: `translateY(${dy}px)`,
+        textShadow: glow > 0 ? `0 0 ${24 * glow}px ${glowColor}` : undefined,
+      }}
+    >
+      {ch === " " ? "" : ch}
+    </div>
+  );
+  const half = (ch: string, top: boolean, extra: React.CSSProperties = {}, shade = 0) => (
+    <div
+      style={{
+        position: "absolute",
+        left: 0,
+        top: top ? 0 : hh,
+        width: w,
+        height: hh,
+        overflow: "hidden",
+        background: top ? topBg : botBg,
+        borderRadius: top ? `${radius}px ${radius}px 0 0` : `0 0 ${radius}px ${radius}px`,
+        ...extra,
+      }}
+    >
+      {glyph(ch, top)}
+      {shade > 0 && <div style={{ position: "absolute", inset: 0, background: `rgba(0,0,0,${shade})` }} />}
+    </div>
+  );
   return (
-    <svg width={r * 2} height={r * 2} style={{ position: "absolute", left: 0, top: 0, overflow: "visible" }}>
-      {ring > 0 && ring < 1 && (
-        <circle cx={r} cy={r} r={r * (1 + 0.75 * ring)} fill="none" stroke={C.coral} strokeWidth={3 * (1 - ring)} opacity={0.8 * (1 - ring)} />
-      )}
-      <polygon points={pts.join(" ")} fill={C.coral} style={{ filter: `drop-shadow(0 0 22px ${C.coral}88)` }} />
-      <circle cx={r} cy={r} r={r * 0.76} fill="none" stroke={C.ink} strokeWidth={2.2} opacity={0.85} />
-      <circle cx={r} cy={r} r={r * 0.7} fill="none" stroke={C.ink} strokeWidth={1} strokeDasharray="2 5" opacity={0.6} />
-    </svg>
+    <div
+      style={{
+        position: "relative",
+        width: w,
+        height: h,
+        perspective: Math.max(700, h * 4),
+        borderRadius: radius,
+        boxShadow: `0 6px 16px rgba(0,0,0,0.45), 0 0 0 1px ${C.border}${glow > 0 ? `, 0 0 ${36 * glow}px ${glowColor}55` : ""}`,
+      }}
+    >
+      {half(cur, true)}
+      {half(f < 1 ? prev : cur, false)}
+      {f < 0.5 && half(prev, true, { transformOrigin: "50% 100%", transform: `rotateX(${-180 * f}deg)` }, 0.7 * f)}
+      {f >= 0.5 && f < 1 && half(cur, false, { transformOrigin: "50% 0%", transform: `rotateX(${180 * (1 - f)}deg)` }, 0.7 * (1 - f))}
+      {/* 真ん中の継ぎ目と左右のヒンジ */}
+      <div style={{ position: "absolute", left: 0, right: 0, top: hh - 1, height: 2, background: "#08090C" }} />
+      <div style={{ position: "absolute", left: -1, top: hh - 5, width: 3, height: 10, borderRadius: 1.5, background: C.borderHi }} />
+      <div style={{ position: "absolute", right: -1, top: hh - 5, width: 3, height: 10, borderRadius: 1.5, background: C.borderHi }} />
+    </div>
   );
 };

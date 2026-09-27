@@ -1,6 +1,6 @@
-// TRACK 03 専用の小物: 話者アバター、フェーダー、パッチケーブル、鍵アイコン、クリップの波形
+// TRACK 03 専用の小物: 話者アバター、フェーダー、パッチケーブル、クリップの波形
 import React from "react";
-import { C, DISPLAY, FPS, MONO } from "../../theme";
+import { C, FPS, MONO } from "../../theme";
 import { LEVELS, line } from "../../timeline";
 import { rand } from "../../time";
 
@@ -42,12 +42,13 @@ export const cable = (a: Pt, b: Pt) => {
   return { d, pt, len };
 };
 
-// ───────── 話者アバター（丸に A / B） ─────────
+// ───────── 話者アバター（丸にアイコン。文字の札にはしない） ─────────
 export const Avatar: React.FC<{
   x: number;
   y: number;
   r: number;
-  letter: string;
+  /** 中のアイコン（色と大きさを受け取って描く） */
+  icon: (color: string, size: number) => React.ReactNode;
   color: string;
   /** 声の包絡線 0〜1（外側の輪が広がる） */
   env?: number;
@@ -55,7 +56,7 @@ export const Avatar: React.FC<{
   lit?: number;
   scale?: number;
   opacity?: number;
-}> = ({ x, y, r, letter, color, env = 0, lit = 0, scale = 1, opacity = 1 }) => {
+}> = ({ x, y, r, icon, color, env = 0, lit = 0, scale = 1, opacity = 1 }) => {
   if (opacity <= 0.001 || scale <= 0.001) return null;
   const R = r + 30;
   const soft = color === C.coral ? "255,106,61" : "59,227,180";
@@ -95,14 +96,9 @@ export const Avatar: React.FC<{
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          fontFamily: DISPLAY,
-          fontSize: r * 1.05,
-          lineHeight: 1,
-          paddingBottom: r * 0.06,
-          color: lit > 0.5 ? C.ink : color,
         }}
       >
-        {letter}
+        {icon(lit > 0.5 ? C.ink : color, r * 1.04)}
       </div>
     </div>
   );
@@ -216,15 +212,6 @@ export const Fader: React.FC<{ h: number; v: number; color: string; lit: number 
     </div>
   );
 };
-
-// ───────── 鍵アイコン（Icons.tsx にないので自前） ─────────
-export const IconLock: React.FC<{ size?: number; color?: string; sw?: number }> = ({ size = 28, color = C.coral, sw = 1.9 }) => (
-  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth={sw} strokeLinecap="round" strokeLinejoin="round">
-    <rect x="4.5" y="10.5" width="15" height="10.5" rx="2.2" />
-    <path d="M8 10.5V7.5a4 4 0 0 1 8 0v3" />
-    <path d="M12 14.6v2.4" />
-  </svg>
-);
 
 // ───────── クリップの波形（30 秒サンプルの形。決定的な擬似データ） ─────────
 export const CLIP_N = 58;

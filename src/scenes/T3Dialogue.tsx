@@ -1,37 +1,42 @@
 /*
- * TRACK 03 — 2人の会話も、1本の台本で（MULTI-SPEAKER）
+ * TRACK 03 — 2 人の掛け合い（MULTI-SPEAKER）＋ 30 秒の声のサンプル（VOICE CLONE）
  *
- * 絵コンテ（すべてナレーションの行・シーン境界に同期。秒は直書きしない）
- *  B0  enter      テープが抜けると同時に、見出し「2人の会話も、1本の台本で」が 1 文字ずつせり上がる（中央・大）。
- *                 上に MONO ラベル「03 — MULTI-SPEAKER」。「1本」だけコーラル。
- *  B1  t3-1       「2人の会話」: 見出しの下に話者 A（コーラル）と話者 B（ミント）の丸がばねで現れ、
- *                 間を点線と会話アイコンがつなぐ（この後のチャンネルの予告）。
- *  B2  t3-2       見出しが左上へ収まる。中央に 1 枚の台本「SCRIPT」がせり上がり、B / A の 2 行が打鍵で入る（「1本の台本から」）。
- *                 「2人分の声を」で A・B の丸が左右へ飛び、そこを起点にミキサーのチャンネル CH A / CH B が
- *                 台本の後ろから左右に分かれ出る。台本の各行からパッチケーブルがそれぞれのチャンネルへ伸びて刺さる。
- *                 「まとめて作れます」で台本の「▶ 1 PASS」が点灯し、1 回の信号が 2 本のケーブルを同時に走る →
+ * 絵コンテ（すべてナレーションの行・行内のフレーズ・シーン境界に同期。秒は直書きしない）
+ *  B0  enter      テープが抜けると同時に、見出し（section("t3").title をそのまま使う）が 1 文字ずつせり上がる（中央・大）。
+ *                 上に MONO ラベル「03 — MULTI-SPEAKER」。
+ *  B1  t3-1 後半  「2人の会話」（音声の間から検出）: 見出しの下に 2 本のマイク（話者 A コーラル / 話者 B ミント）が
+ *                 同時にばねで現れ、点線でつながる。交互に一度ずつ「話す」輪。
+ *  B2  t3-2       見出しが左上へ収まる。中央に 1 枚の台本「SCRIPT」がせり上がり、話者名つきの 2 行が打鍵で入る。
+ *                 「2人分の声を」: マイクが左右へ飛び、そこを起点にミキサーの CH 1 / CH 2 が台本の後ろから分かれ出る。
+ *                 台本の各行からパッチケーブルがそれぞれのチャンネルへ伸びて刺さる。
+ *                 「まとめて」: 台本の「▶ 1 PASS」が点灯し、1 回の信号が 2 本のケーブルを同時に走る →
  *                 両チャンネルが READY になり、フェーダーが −∞ から 0 dB まで上がる。
- *  B3  t3-3       話者 B が話す: 台本の B 行がミントでハイライト（読み進みバー）、B ケーブルに信号が流れ、
- *                 CH B が点灯（吹き出し型スクリーンのオシロ・VU・アバターの輪が t3-3 の声だけに反応）。CH A は一歩下がる。
- *                 「1回で」で「1 PASS」がもう一度はねる。
- *  B4  t3-4       話者 A が話す: 同じことが CH A（コーラル）で起き、CH B は下がる。B 行には済みのチェック。
- *  B5  t3-5       ミキサー全体が右上へ縮んで退き、下に「VOICE CLONE」パネルが立ち上がる。
- *                 「30秒の音声があれば」: SAMPLE クリップにコーラルの波形が録られていき、タイマーが 00:00 → 00:30。
- *                 「自分の声を再現」: 矢印を信号が渡り CLONE ノードの輪が一周 → YOUR VOICE クリップに同じ形の点線の輪郭が現れ、
- *                 ミントで塗られていく。最後に鍵アイコンつきの注記「本人の同意が必要」。そのまま次のテープへ。
+ *  B3  t3-3       話者 B が話す: 台本の B 行がミントでハイライト（読み進みバー）、ケーブルに信号が流れ、
+ *                 CH 2 が点灯（オシロ・VU・マイクの輪が t3-3 の声だけに反応）。CH 1 は一歩下がる。「1回で」で 1 PASS がはねる。
+ *  B4  t3-4       話者 A が話す: 同じことが CH 1（コーラル）で起き、CH 2 は下がる。B 行には済みのチェック。
+ *  B5  t3-4 の後  台本とケーブルが下へ抜け、CH 2 が CH 1 の隣へ寄る。その右に空きスロット「+ CH 3」が点線で現れる。
+ *                 見出しは「03+ — VOICE CLONE / 30秒で、自分の声も」へ入れ替わる（文字が上へ抜け、下からせり上がる）。
+ *  B6  t3-5 前半  「30秒の音声があれば」: 右にオープンリールのテープデッキがせり上がり、リールが回って
+ *                 カウンター 00:00 → 00:30、クリップにコーラルの波形が録られる。TARGET 00:30 にチェック。
+ *  B7  t3-5 後半  「自分の声を」: デッキの OUT からパッチケーブルが CH 3 へ伸びて刺さり、信号が渡る。
+ *                 「再現することもできます」: 空きスロットが本物のチャンネル「CH 3 / 自分の声」になり、
+ *                 画面に同じ形の波形が塗られ、フェーダーが 0 dB へ。READY。試聴の再生ヘッドが一度だけ走り、VU が振れる。
+ *                 （同意の話は TRACK 05 の見せ場なのでここでは出さない）そのまま次のテープへ。
  */
 import React from "react";
 import { SceneShell } from "../components/SceneShell";
 import { Panel } from "../components/Panel";
 import { Oscilloscope, VUMeter } from "../components/Meters";
 import { Sfx } from "../components/Sfx";
-import { IconChats, IconCopy, IconDoc, IconMic, IconUser } from "../components/Icons";
+import { IconChats, IconDoc, IconMic, IconUser } from "../components/Icons";
 import { C, DISPLAY, FONT, MONO, PAD_X } from "../theme";
-import { line, sceneEnter } from "../timeline";
+import { line, section, sceneEnter } from "../timeline";
 import { clamp01, ease, mix, prog, springAt, useTime } from "../time";
-import { Avatar, ClipWave, Fader, IconLock, cable, envAt } from "./T3Dialogue/parts";
+import { Avatar, CLIP_N, CLIP_SHAPE, ClipWave, Fader, cable, envAt } from "./T3Dialogue/parts";
+import { DECK, DECK_CLIP, TapeDeck } from "./T3Dialogue/deck";
+import { phrases } from "./T3Dialogue/timing";
 
-// ───────── タイミング（すべて行・シーン境界から計算） ─────────
+// ───────── タイミング（すべて行・行内のフレーズ・シーン境界から計算） ─────────
 const E = sceneEnter("t3");
 const L1 = line("t3-1");
 const L2 = line("t3-2");
@@ -39,72 +44,124 @@ const L3 = line("t3-3");
 const L4 = line("t3-4");
 const L5 = line("t3-5");
 const at = (l: { start: number; end: number }, f: number) => mix(l.start, l.end, f);
+const [, P1b] = phrases("t3-1", [0.5]); // トラック3は、 / 2人の会話。
+const [P2a, P2b] = phrases("t3-2", [0.4]); // 1本の台本から、 / 2人分の声をまとめて作れます。
+const [P5a, P5b] = phrases("t3-5", [0.4]); // 30秒の音声があれば、 / 自分の声を再現することもできます。
 
-const PULSE = at(L2, 0.64); // 「まとめて」
-const SHRINK_A = Math.max(L4.end + 0.1, L5.start - 0.3);
+const CAB_START = P2b.start + 0.28;
+const PLUG = CAB_START + 0.42;
+const PULSE = Math.max(mix(P2b.start, P2b.end, 0.45), PLUG + 0.12); // 「まとめて」
+const REGROUP = Math.max(L4.end + 0.1, L5.start - 0.4); // 台本が抜け、CH 2 が寄る
+const DECK_IN = Math.max(L5.start - 0.05, REGROUP + 0.45);
+const REC_A = Math.max(P5a.start + 0.15, DECK_IN + 0.35); // 「30秒の音声があれば」
+const REC_B = Math.max(REC_A + 0.8, P5a.end);
+const PATCH = Math.max(P5b.start - 0.05, REC_B + 0.15); // 「自分の声を」
 const TM = {
   headIn: E + 0.08,
-  duo: at(L1, 0.42), // 「2人の会話」
+  duo: P1b.start - 0.05, // 「2人の会話」
   settleA: L2.start - 0.3,
   settleB: L2.start + 0.32,
   sheetIn: L2.start + 0.12,
   typeA: L2.start + 0.34,
-  typeB: at(L2, 0.42),
-  strips: at(L2, 0.36), // 「2人分の声を」
-  cables: at(L2, 0.46),
-  plug: at(L2, 0.46) + 0.42,
+  typeB: Math.max(L2.start + 1.0, P2a.end + 0.15),
+  strips: P2b.start, // 「2人分の声を」
+  cables: CAB_START,
+  plug: PLUG,
   pulse: PULSE,
   arrive: PULSE + 0.36,
   bOn: L3.start - 0.12,
   onePass: at(L3, 0.42), // 「1回で」
   aOn: L4.start - 0.12,
   aOff: L4.end + 0.05,
-  shrinkA: SHRINK_A, // ミキサーはまず右へ縮み、見出しを避けてから右上へ上がる
-  cloneIn: SHRINK_A + 0.42,
-  countA: Math.max(at(L5, 0.1), SHRINK_A + 0.72), // 「30秒の音声があれば」
-  countB: at(L5, 0.38),
-  send: at(L5, 0.38),
-  node: at(L5, 0.47),
-  drawA: at(L5, 0.5), // 「自分の声を再現」
-  drawB: at(L5, 0.72),
-  consent: at(L5, 0.8),
+  regroup: REGROUP,
+  slide: REGROUP + 0.12, // CH 2 が CH 1 の隣へ（0.7 秒）
+  slot: REGROUP + 0.7, // CH 2 が寄り終わるころに空きスロット
+  swap: Math.max(REGROUP + 0.1, L5.start - 0.2),
+  deckIn: DECK_IN,
+  recA: REC_A,
+  recB: REC_B,
+  patch: PATCH,
+  plug3: PATCH + 0.4,
+  send: PATCH + 0.4,
+  land: PATCH + 0.72,
+  fillB: Math.max(PATCH + 1.3, at(P5b, 0.72)), // 「再現することもできます」
+  sweepA: Math.max(PATCH + 1.5, at(P5b, 0.8)),
 };
 
 // 話している度合い（0〜1）
-const actB = (t: number) => prog(t, TM.bOn, TM.bOn + 0.22) * (1 - prog(t, TM.aOn - 0.02, TM.aOn + 0.22));
-const actA = (t: number) => prog(t, TM.aOn, TM.aOn + 0.22) * (1 - prog(t, TM.aOff, TM.aOff + 0.3));
+// 台詞の順番は台本の voice から決める（t3-3 を話すのが A でも B でも絵が合う）
+type Side = "A" | "B";
+const FIRST: Side = line("t3-3").voice === "speakerA" ? "A" : "B";
+const rowOf = (side: Side) => (side === FIRST ? 0 : 1);
+const lineOf = (side: Side) => (rowOf(side) === 0 ? "t3-3" : "t3-4");
+const act1 = (t: number) => prog(t, TM.bOn, TM.bOn + 0.22) * (1 - prog(t, TM.aOn - 0.02, TM.aOn + 0.22));
+const act2 = (t: number) => prog(t, TM.aOn, TM.aOn + 0.22) * (1 - prog(t, TM.aOff, TM.aOff + 0.3));
+const actOf = (side: Side, t: number) => (rowOf(side) === 0 ? act1(t) : act2(t));
+const actA = (t: number) => actOf("A", t);
+const actB = (t: number) => actOf("B", t);
+// t3-5: 2 人のチャンネルは一歩下がる
+const backOf = (t: number) => prog(t, TM.regroup, TM.regroup + 0.5);
 
 // ───────── レイアウト ─────────
-const HEAD = { x: PAD_X, y: 156, size: 80, w: 962 }; // w: 実測した見出しの幅
-const BIG = 1.4;
+const HEAD = { x: PAD_X, y: 156, size: 80 };
 const BIG_CY = 432;
 const MIX_Y = 318;
 const STRIP = { w: 300, h: 540 };
+const GUTTER = 24;
 const CHA = { x: PAD_X, y: MIX_Y };
 const CHB = { x: 1920 - PAD_X - STRIP.w, y: MIX_Y };
+// t3-5 の並び: CH 1 | CH 2 | CH 3（新） ‖ テープデッキ
+const CHB_T5 = PAD_X + STRIP.w + GUTTER;
+const CH3 = { x: PAD_X + (STRIP.w + GUTTER) * 2, y: MIX_Y };
+const DECK_POS = { x: 1920 - PAD_X - DECK.w, y: MIX_Y };
 const SHEET = { x: 526, y: 416, w: 868, h: 344 };
-const ROW = { top: 80, h: 88, textX: 136, fs: 34 };
+const ROW = { top: 80, h: 88, nameX: 72, textX: 190, fs: 34 };
 const ROW_Y = [0, 1].map((i) => SHEET.y + ROW.top + ROW.h * i + ROW.h / 2);
 const AV_R = 34;
 const AV_A = { x: CHA.x + 56, y: MIX_Y + 114 };
-const AV_B = { x: CHB.x + STRIP.w - 56, y: MIX_Y + 114 }; // CH B は左右反転（会話の左右）
-// 台本が出ている間、A / B の丸は自分の行の外側で待つ
-const SIDE_A = { x: SHEET.x - 58, y: SHEET.y + ROW.top + ROW.h * 1.5 };
-const SIDE_B = { x: SHEET.x + SHEET.w + 58, y: SHEET.y + ROW.top + ROW.h * 0.5 };
-// チャンネルは台本の後ろからこの距離だけ左右へ滑り出る（丸はそれに乗って運ばれる）
+const AV_B = { x: CHB.x + STRIP.w - 56, y: MIX_Y + 114 }; // CH 2 は左右反転（会話の左右）
+// 台本が出ている間、2 本のマイクは自分の行の外側で待つ
+const SIDE_A = { x: SHEET.x - 58, y: ROW_Y[rowOf("A")] };
+const SIDE_B = { x: SHEET.x + SHEET.w + 58, y: ROW_Y[rowOf("B")] };
+// チャンネルは台本の後ろからこの距離だけ左右へ滑り出る（マイクはそれに乗って運ばれる）
 const STRIP_SLIDE = SIDE_A.x - AV_A.x;
-const DUO = { y: 626, dx: 196, r: 44 };
-const CAB_A = cable({ x: SHEET.x, y: ROW_Y[1] }, { x: CHA.x + STRIP.w, y: AV_A.y });
-const CAB_B = cable({ x: SHEET.x + SHEET.w, y: ROW_Y[0] }, { x: CHB.x, y: AV_B.y });
-// t3-5: ミキサーは右上へ縮む
-const SHRINK = { s: 0.4, top: 170 };
-const CLONE = { x: PAD_X, y: 420, w: 1920 - PAD_X * 2, h: 420 };
+const DUO = { y: 640, dx: 180, r: 48 };
+const CAB_A = cable({ x: SHEET.x, y: ROW_Y[rowOf("A")] }, { x: CHA.x + STRIP.w, y: AV_A.y });
+const CAB_B = cable({ x: SHEET.x + SHEET.w, y: ROW_Y[rowOf("B")] }, { x: CHB.x, y: AV_B.y });
+// t3-5: デッキの OUT → CH 3 の入力
+const CAB_3 = cable({ x: DECK_POS.x, y: DECK_POS.y + DECK_CLIP.y + DECK_CLIP.h / 2 }, { x: CH3.x + STRIP.w, y: AV_A.y });
 
-type RowDef = { tag: string; text: string; id: string; color: string; soft: string };
-const ROWS: RowDef[] = [
-  { tag: "B", text: "これ、ほんとに1回で作ってるの？", id: "t3-3", color: C.mint, soft: C.mintSoft },
-  { tag: "A", text: "うん。話者を書き分けておくだけ。", id: "t3-4", color: C.coral, soft: C.coralSoft },
-];
+// ───────── 見出しの文字 ─────────
+// 見出しは section("t3").title をそのまま使う（台本側でタイトルを変えても追従する）
+const TITLE_A = section("t3").title || "2人の会話も、1本の台本で";
+const TITLE_B = "30秒で、自分の声も";
+// コーラルで強調する語（最初に見つかったもの）
+const EMPH = ["1本", "30秒", "同時", "ワンテイク", "ふたり", "2人"];
+const emphMask = (s: string) => {
+  const chars = [...s];
+  const w = EMPH.find((k) => s.includes(k));
+  const i = w ? chars.join("").indexOf(w) : -1;
+  return chars.map((_, k) => i >= 0 && k >= i && k < i + [...(w ?? "")].length);
+};
+// Dela Gothic One の字幅（実測: 数字 ≈ .86em、読点 .41em、句点 .33em、ほか全角 1em）+ 字間 .02em
+const dispW = (s: string, size: number) =>
+  [...s].reduce(
+    (a, ch) => a + size * ((/[0-9]/.test(ch) ? 0.86 : /[A-Za-z]/.test(ch) ? 0.8 : ch === "、" ? 0.42 : ch === "。" ? 0.34 : 1) + 0.02),
+    0,
+  );
+const HEAD_W = dispW(TITLE_A, HEAD.size);
+const BIG = Math.min(1.4, (1920 - PAD_X * 2) / HEAD_W);
+
+type RowDef = { name: string; text: string; id: string; color: string; soft: string };
+const plain = (id: string) => line(id).text.replace(/[「」]/g, "");
+const rowDef = (side: Side): RowDef => ({
+  name: `話者 ${side}`,
+  text: plain(lineOf(side)),
+  id: lineOf(side),
+  color: side === "A" ? C.coral : C.mint,
+  soft: side === "A" ? C.coralSoft : C.mintSoft,
+});
+const ROWS: RowDef[] = [rowDef(FIRST), rowDef(FIRST === "A" ? "B" : "A")];
 // 行ごとの打鍵の時間帯
 const TYPE_MID = mix(TM.typeA, TM.typeB, 0.5);
 const ROW_TYPE = [
@@ -122,17 +179,42 @@ const mono = (size: number, color: string = C.sub, extra: React.CSSProperties = 
   ...extra,
 });
 
-// ───────── 見出し ─────────
+const micIcon = (color: string, size: number) => <IconMic size={size} color={color} sw={1.9} />;
+const userIcon = (color: string, size: number) => <IconUser size={size} color={color} sw={1.9} />;
+
+// ───────── 見出し（t3-5 で VOICE CLONE の見出しへ入れ替わる） ─────────
+const TitleChars: React.FC<{ text: string; t: number; inAt: number; outAt?: number }> = ({ text, t, inAt, outAt }) => {
+  const chars = [...text];
+  const mask = emphMask(text);
+  return (
+    <div style={{ display: "flex", fontFamily: DISPLAY, fontSize: HEAD.size, lineHeight: 1.1, letterSpacing: "0.02em" }}>
+      {chars.map((ch, i) => {
+        const p = prog(t, inAt + i * 0.035, inAt + i * 0.035 + 0.5, ease.outQuint);
+        const o = outAt === undefined ? 0 : prog(t, outAt + i * 0.022, outAt + i * 0.022 + 0.34, ease.inOut);
+        return (
+          <span key={i} style={{ display: "inline-block", overflow: "hidden", paddingBottom: 4 }}>
+            <span style={{ display: "inline-block", transform: `translateY(${(1 - p) * 105 - o * 105}%)`, color: mask[i] ? C.coral : C.text }}>
+              {ch}
+            </span>
+          </span>
+        );
+      })}
+    </div>
+  );
+};
+
 const Headline: React.FC<{ t: number }> = ({ t }) => {
   const settle = prog(t, TM.settleA, TM.settleB, ease.inOut);
   const s = mix(BIG, 1, settle);
-  const bigW = HEAD.w * BIG;
+  const bigW = HEAD_W * BIG;
   const bigH = (34 + HEAD.size * 1.1) * BIG;
   const tx = mix(960 - bigW / 2 - HEAD.x, 0, settle);
   const ty = mix(BIG_CY - bigH / 2 - HEAD.y, 0, settle);
-  const chars = [..."2人の会話も、1本の台本で"];
   const lab = prog(t, TM.headIn + 0.25, TM.headIn + 0.7, ease.outQuint);
   const rule = prog(t, TM.headIn + 0.2, TM.headIn + 0.8, ease.outQuint);
+  // ラベルの入れ替え
+  const labOut = prog(t, TM.swap, TM.swap + 0.25);
+  const labIn = prog(t, TM.swap + 0.25, TM.swap + 0.6, ease.outQuint);
   return (
     <div
       style={{
@@ -143,46 +225,48 @@ const Headline: React.FC<{ t: number }> = ({ t }) => {
         transform: `translate(${tx}px, ${ty}px) scale(${s})`,
       }}
     >
-      <div style={{ display: "flex", alignItems: "center", gap: 14, height: 24, marginBottom: 10 }}>
+      <div style={{ position: "relative", display: "flex", alignItems: "center", gap: 14, height: 24, marginBottom: 10 }}>
         <div style={{ width: 40 * rule, height: 3, background: C.coral, borderRadius: 2 }} />
-        <div style={{ ...mono(20, C.sub), letterSpacing: "0.2em", opacity: lab, transform: `translateX(${(1 - lab) * -12}px)` }}>
-          <span style={{ color: C.coral }}>03</span> — MULTI-SPEAKER
+        <div style={{ position: "relative" }}>
+          <div style={{ ...mono(20, C.sub), letterSpacing: "0.2em", opacity: lab * (1 - labOut), transform: `translateX(${(1 - lab) * -12}px)` }}>
+            <span style={{ color: C.coral }}>03</span> — MULTI-SPEAKER
+          </div>
+          {labIn > 0 && (
+            <div style={{ position: "absolute", left: 0, top: 0, ...mono(20, C.sub), letterSpacing: "0.2em", opacity: labIn, transform: `translateX(${(1 - labIn) * -12}px)` }}>
+              <span style={{ color: C.coral }}>03+</span> — VOICE CLONE
+            </div>
+          )}
         </div>
       </div>
-      <div style={{ display: "flex", fontFamily: DISPLAY, fontSize: HEAD.size, lineHeight: 1.1, letterSpacing: "0.02em" }}>
-        {chars.map((ch, i) => {
-          const p = prog(t, TM.headIn + i * 0.035, TM.headIn + i * 0.035 + 0.5, ease.outQuint);
-          const emph = i === 7 || i === 8;
-          return (
-            <span key={i} style={{ display: "inline-block", overflow: "hidden", paddingBottom: 4 }}>
-              <span style={{ display: "inline-block", transform: `translateY(${(1 - p) * 105}%)`, color: emph ? C.coral : C.text }}>
-                {ch}
-              </span>
-            </span>
-          );
-        })}
+      <div style={{ position: "relative" }}>
+        <TitleChars text={TITLE_A} t={t} inAt={TM.headIn} outAt={TM.swap} />
+        {t >= TM.swap + 0.15 && (
+          <div style={{ position: "absolute", left: 0, top: 0 }}>
+            <TitleChars text={TITLE_B} t={t} inAt={TM.swap + 0.15} />
+          </div>
+        )}
       </div>
     </div>
   );
 };
 
-// ───────── t3-1: 2 人の予告（点線・ラベル。丸は Avatars が描く） ─────────
+// ───────── t3-1: 2 本のマイクの予告（点線・ラベル。丸は Avatars が描く） ─────────
 const Duo: React.FC<{ t: number }> = ({ t }) => {
-  const inP = prog(t, TM.duo + 0.12, TM.duo + 0.62, ease.outQuint);
+  const inP = prog(t, TM.duo + 0.1, TM.duo + 0.55, ease.outQuint);
   const out = prog(t, TM.settleA - 0.1, TM.settleA + 0.22);
   if (inP <= 0 || out >= 1) return null;
   const gapIn = DUO.r + 18;
   const half = DUO.dx - gapIn;
-  const icon = springAt(t, TM.duo + 0.3, { damping: 13, stiffness: 170 });
+  const icon = springAt(t, TM.duo + 0.25, { damping: 13, stiffness: 170 });
   return (
     <div style={{ position: "absolute", left: 0, top: 0, width: 1920, height: 1080, opacity: 1 - out }}>
       <svg width={1920} height={1080} style={{ position: "absolute", left: 0, top: 0 }}>
         {[-1, 1].map((sgn) => (
           <line
             key={sgn}
-            x1={960 + sgn * 44}
+            x1={960 + sgn * 36}
             y1={DUO.y}
-            x2={960 + sgn * (44 + (half - 44) * inP)}
+            x2={960 + sgn * (36 + (half - 36) * inP)}
             y2={DUO.y}
             stroke={C.borderHi}
             strokeWidth={2}
@@ -191,8 +275,8 @@ const Duo: React.FC<{ t: number }> = ({ t }) => {
           />
         ))}
       </svg>
-      <div style={{ position: "absolute", left: 960 - 22, top: DUO.y - 22, transform: `scale(${icon})` }}>
-        <IconChats size={44} color={C.sub} sw={1.7} />
+      <div style={{ position: "absolute", left: 960 - 20, top: DUO.y - 20, transform: `scale(${icon})` }}>
+        <IconChats size={40} color={C.sub} sw={1.7} />
       </div>
       {(["A", "B"] as const).map((s, i) => (
         <div
@@ -201,26 +285,34 @@ const Duo: React.FC<{ t: number }> = ({ t }) => {
             position: "absolute",
             left: 960 + (i === 0 ? -1 : 1) * DUO.dx - 120,
             width: 240,
-            top: DUO.y + DUO.r + 22,
+            top: DUO.y + DUO.r + 26,
             textAlign: "center",
-            ...mono(18, i === 0 ? C.coral : C.mint),
+            fontFamily: FONT,
+            fontWeight: 700,
+            fontSize: 26,
+            lineHeight: "32px",
+            color: i === 0 ? C.coral : C.mint,
+            whiteSpace: "nowrap",
             opacity: inP,
             transform: `translateY(${(1 - inP) * 10}px)`,
           }}
         >
-          SPEAKER {s}
+          話者 {s}
         </div>
       ))}
     </div>
   );
 };
 
-// ───────── アバター（t3-1 の予告位置 → チャンネルの位置へ飛ぶ） ─────────
+// ───────── マイク（t3-1 の予告位置 → チャンネルの位置へ飛ぶ） ─────────
 const stripStart = (side: "A" | "B") => TM.strips + (side === "A" ? 0 : 0.08);
 const stripIn = (t: number, side: "A" | "B") => prog(t, stripStart(side), stripStart(side) + 0.72, ease.outQuint);
+// t3-5 で CH 2 が CH 1 の隣へ寄る量
+const slideB = (t: number) => mix(0, CHB_T5 - CHB.x, prog(t, TM.slide, TM.slide + 0.7, ease.inOut));
 
 const Avatars: React.FC<{ t: number }> = ({ t }) => {
   const mv = prog(t, TM.settleA, TM.settleB + 0.05, ease.inOut);
+  const back = backOf(t);
   return (
     <>
       {(["A", "B"] as const).map((s) => {
@@ -228,16 +320,16 @@ const Avatars: React.FC<{ t: number }> = ({ t }) => {
         const pre = { x: 960 + (isA ? -1 : 1) * DUO.dx, y: DUO.y };
         const side = isA ? SIDE_A : SIDE_B;
         const fin = isA ? AV_A : AV_B;
-        const pop = springAt(t, TM.duo + (isA ? 0 : 0.12), { damping: 12, stiffness: 170 });
+        const pop = springAt(t, TM.duo + (isA ? 0 : 0.04), { damping: 12, stiffness: 170 });
         const ride = stripIn(t, s); // チャンネルと同じ動き
         const rideY = prog(t, stripStart(s), stripStart(s) + 0.6, ease.outQuint);
-        const x = mix(mix(pre.x, side.x, mv), fin.x, ride);
+        const x = mix(mix(pre.x, side.x, mv), fin.x, ride) + (isA ? 0 : slideB(t));
         const y = mix(mix(pre.y, side.y, mv) - Math.sin(mv * Math.PI) * 36, fin.y, rideY);
         const act = isA ? actA(t) : actB(t);
         const other = isA ? actB(t) : actA(t);
-        const env = act * envAt(isA ? "t3-4" : "t3-3", t);
+        const env = act * envAt(lineOf(s), t);
         // 予告のときに一度ずつ「話す」輪
-        const hint = prog(t, TM.duo + (isA ? 0.5 : 0.85), TM.duo + (isA ? 1.1 : 1.45), ease.out);
+        const hint = prog(t, TM.duo + (isA ? 0.45 : 0.8), TM.duo + (isA ? 1.05 : 1.4), ease.out);
         const hintEnv = hint > 0 && hint < 1 ? Math.sin(hint * Math.PI) * 0.7 : 0;
         return (
           <Avatar
@@ -245,12 +337,12 @@ const Avatars: React.FC<{ t: number }> = ({ t }) => {
             x={x}
             y={y}
             r={mix(DUO.r, AV_R, mv)}
-            letter={s}
+            icon={micIcon}
             color={isA ? C.coral : C.mint}
             env={Math.max(env, hintEnv * (1 - mv))}
             lit={act}
             scale={pop * mix(1, 0.985, other)}
-            opacity={clamp01(pop * 3) * mix(1, 0.4, other)}
+            opacity={clamp01(pop * 3) * mix(1, 0.4, other) * mix(1, 0.42, back)}
           />
         );
       })}
@@ -261,7 +353,8 @@ const Avatars: React.FC<{ t: number }> = ({ t }) => {
 // ───────── 中央: 台本 ─────────
 const Sheet: React.FC<{ t: number }> = ({ t }) => {
   const inP = prog(t, TM.sheetIn, TM.sheetIn + 0.6, ease.outQuint);
-  if (inP <= 0) return null;
+  const outP = prog(t, TM.regroup, TM.regroup + 0.4, ease.inOut);
+  if (inP <= 0 || outP >= 1) return null;
   const passOn = prog(t, TM.pulse - 0.08, TM.pulse + 0.1);
   // 点灯でばね、「1回で」でもう一度だけ小さくはねる
   const passPop = springAt(t, TM.pulse - 0.08, { damping: 10, stiffness: 220 });
@@ -281,8 +374,8 @@ const Sheet: React.FC<{ t: number }> = ({ t }) => {
         position: "absolute",
         left: SHEET.x,
         top: SHEET.y,
-        opacity: inP,
-        transform: `translateY(${(1 - inP) * 48}px)`,
+        opacity: inP * (1 - outP),
+        transform: `translateY(${(1 - inP) * 48 + outP * 70}px)`,
       }}
     >
       <Panel
@@ -302,7 +395,7 @@ const Sheet: React.FC<{ t: number }> = ({ t }) => {
           const chars = [...r.text];
           const shown = Math.floor(chars.length * clamp01((t - ty.a) / (ty.b - ty.a)) + 1e-6);
           const tagPop = springAt(t, ty.a - 0.06, { damping: 12, stiffness: 200 });
-          const act = i === 0 ? actB(t) : actA(t);
+          const act = i === 0 ? act1(t) : act2(t);
           const L = line(r.id);
           const talk = prog(t, L.start, L.end, ease.linear);
           const done = prog(t, L.end + 0.05, L.end + 0.35, ease.outQuint);
@@ -331,28 +424,28 @@ const Sheet: React.FC<{ t: number }> = ({ t }) => {
               <div style={{ position: "absolute", left: 30, top: ROW.h / 2 - 10, ...mono(16, C.dim, { fontWeight: 500, letterSpacing: "0.04em" }) }}>
                 {String(i + 1).padStart(2, "0")}
               </div>
-              {/* 話者の札 */}
+              {/* 話者名（台本の書き分け） */}
               <div
                 style={{
                   position: "absolute",
-                  left: 72,
-                  top: ROW.h / 2 - 23,
-                  width: 46,
-                  height: 46,
-                  borderRadius: 10,
-                  background: r.color,
+                  left: ROW.nameX,
+                  top: ROW.h / 2 - 17,
+                  height: 34,
                   display: "flex",
                   alignItems: "center",
-                  justifyContent: "center",
-                  fontFamily: DISPLAY,
-                  fontSize: 26,
-                  color: C.ink,
-                  transform: `scale(${tagPop})`,
-                  boxShadow: act > 0.5 ? `0 0 16px ${r.color}88` : undefined,
+                  fontFamily: FONT,
+                  fontWeight: 900,
+                  fontSize: 24,
+                  color: r.color,
+                  whiteSpace: "nowrap",
+                  opacity: clamp01(tagPop * 2),
+                  transform: `translateX(${(1 - tagPop) * -10}px)`,
+                  textShadow: act > 0.5 ? `0 0 14px ${r.color}88` : undefined,
                 }}
               >
-                {r.tag}
+                {r.name}
               </div>
+              <div style={{ position: "absolute", left: ROW.textX - 20, top: ROW.h / 2 - 16, width: 2, height: 32, borderRadius: 1, background: r.color, opacity: 0.55 * clamp01(tagPop) }} />
               {/* 台詞 */}
               <div
                 style={{
@@ -416,7 +509,7 @@ const Sheet: React.FC<{ t: number }> = ({ t }) => {
         {/* フッター */}
         <div style={{ position: "absolute", left: 0, right: 0, top: 272, height: 1, background: C.border }} />
         <div style={{ position: "absolute", left: 30, top: 296, ...mono(16, C.sub) }}>
-          1 SCRIPT <span style={{ color: C.dim }}>→</span> 2 VOICES
+          OUT <span style={{ color: C.dim }}>→</span> CH 1 <span style={{ color: C.dim }}>/</span> CH 2
         </div>
         <div
           style={{
@@ -468,7 +561,7 @@ const Strip: React.FC<{ t: number; side: "A" | "B" }> = ({ t, side }) => {
   const isA = side === "A";
   const pos = isA ? CHA : CHB;
   const color = isA ? C.coral : C.mint;
-  const lid = isA ? "t3-4" : "t3-3";
+  const lid = lineOf(side);
   const inP = stripIn(t, side);
   if (inP <= 0) return null;
   const act = isA ? actA(t) : actB(t);
@@ -489,20 +582,21 @@ const Strip: React.FC<{ t: number; side: "A" | "B" }> = ({ t, side }) => {
       <span style={{ color: C.dim }}>○ IDLE</span>
     );
   const slide = (1 - inP) * STRIP_SLIDE * (isA ? 1 : -1);
+  const back = backOf(t);
   return (
     <div
       style={{
         position: "absolute",
-        left: pos.x,
+        left: pos.x + (isA ? 0 : slideB(t)),
         top: pos.y,
-        opacity: clamp01(inP * 2.2) * mix(1, 0.4, other),
+        opacity: clamp01(inP * 2.2) * mix(1, 0.4, other) * mix(1, 0.42, back),
         transform: `translateX(${slide}px) scale(${mix(1, 0.985, other)})`,
       }}
     >
       <Panel
         w={STRIP.w}
         h={STRIP.h}
-        header={<span style={{ color: act > 0.5 ? C.text : C.sub }}>CH {side}</span>}
+        header={<span style={{ color: act > 0.5 ? C.text : C.sub }}>CH {isA ? 1 : 2}</span>}
         status={status}
         accent={color}
         glow={Math.max(act * 0.85, flash * 0.7)}
@@ -572,7 +666,8 @@ const Strip: React.FC<{ t: number; side: "A" | "B" }> = ({ t, side }) => {
 // ───────── パッチケーブル（台本の行 → チャンネル） ─────────
 const Cables: React.FC<{ t: number; layer: "under" | "over" }> = ({ t, layer }) => {
   const draw = prog(t, TM.cables, TM.plug, ease.inOut);
-  if (draw <= 0) return null;
+  const gone = prog(t, TM.regroup, TM.regroup + 0.3);
+  if (draw <= 0 || gone >= 1) return null;
   const plugged = t >= TM.plug;
   const pulse = prog(t, TM.pulse, TM.arrive, ease.inOut);
   const items = [
@@ -580,7 +675,7 @@ const Cables: React.FC<{ t: number; layer: "under" | "over" }> = ({ t, layer }) 
     { c: CAB_A, color: C.coral, act: actA(t) },
   ];
   return (
-    <svg width={1920} height={1080} style={{ position: "absolute", left: 0, top: 0, overflow: "visible" }}>
+    <svg width={1920} height={1080} style={{ position: "absolute", left: 0, top: 0, overflow: "visible", opacity: 1 - gone }}>
       {items.map(({ c, color, act }, i) => {
         if (layer === "under") {
           return (
@@ -630,314 +725,238 @@ const Cables: React.FC<{ t: number; layer: "under" | "over" }> = ({ t, layer }) 
   );
 };
 
-// ───────── t3-5: VOICE CLONE パネル ─────────
-const CL = {
-  left: { x: 56, w: 600 },
-  right: { x: 1072, w: 600 },
-  titleY: 74,
-  clipY: 160,
-  clipH: 150,
-  nodeX: 864,
-  nodeR: 46,
-};
-
-const Clip: React.FC<{ x: number; w: number; color: string; lit: number; children: React.ReactNode }> = ({ x, w, color, lit, children }) => (
-  <div
-    style={{
-      position: "absolute",
-      left: x,
-      top: CL.clipY,
-      width: w,
-      height: CL.clipH,
-      borderRadius: 14,
-      boxSizing: "border-box",
-      background: "#0A0C10",
-      border: `1.5px solid ${lit > 0.5 ? color : C.border}`,
-      boxShadow: lit > 0 ? `0 0 ${30 * lit}px ${color}33, inset 0 0 ${30 * lit}px ${color}14` : undefined,
-      overflow: "hidden",
-    }}
-  >
-    {children}
-  </div>
-);
-
-const Clone: React.FC<{ t: number }> = ({ t }) => {
-  const inP = prog(t, TM.cloneIn, TM.cloneIn + 0.6, ease.outQuint);
-  if (inP <= 0) return null;
-  const cnt = prog(t, TM.countA, TM.countB, ease.inOut);
-  const sec = Math.floor(cnt * 30 + 1e-6);
-  const recording = t >= TM.countA && t < TM.countB + 0.1;
-  const recLit = prog(t, TM.countA - 0.1, TM.countA + 0.1) * (1 - prog(t, TM.countB + 0.1, TM.countB + 0.6) * 0.6);
-  const arrowDraw = prog(t, TM.send - 0.06, TM.send + 0.3, ease.outQuint);
-  const dot = prog(t, TM.send, TM.drawA, ease.inOut);
-  const ring = prog(t, TM.send + 0.05, TM.node + 0.18, ease.inOut);
-  const ghost = prog(t, TM.node, TM.node + 0.25);
-  const fill = prog(t, TM.drawA, TM.drawB, ease.inOut);
-  const ready = prog(t, TM.drawB, TM.drawB + 0.2);
-  const sweep = prog(t, TM.drawB + 0.1, TM.drawB + 0.9, ease.inOut);
-  const consent = springAt(t, TM.consent, { damping: 14, stiffness: 170 });
+// ───────── t3-5: 空きスロット → CH 3「自分の声」 ─────────
+const Channel3: React.FC<{ t: number }> = ({ t }) => {
+  const slot = prog(t, TM.slot, TM.slot + 0.5, ease.outQuint);
+  if (slot <= 0) return null;
+  const mat = prog(t, TM.land, TM.land + 0.45, ease.outQuint); // スロットが本物のチャンネルになる
+  const fillP = prog(t, TM.land + 0.05, TM.fillB, ease.inOut);
+  const ready = prog(t, TM.fillB, TM.fillB + 0.2);
+  const flash = t >= TM.fillB ? 1 - prog(t, TM.fillB, TM.fillB + 0.9) : 0;
+  const sweep = prog(t, TM.sweepA, TM.sweepA + 0.9, ease.linear);
+  const playing = sweep > 0 && sweep < 1;
+  const k = Math.min(CLIP_N - 1, Math.floor(sweep * CLIP_N));
+  const lvl = playing ? CLIP_SHAPE[k] * 0.95 * Math.sin(Math.PI * sweep) ** 0.3 : 0;
+  const fv = mix(0.04, 0.8, fillP);
+  const incoming = prog(t, TM.send, TM.land); // ケーブルの信号が近づく
   const status =
     ready > 0.5 ? (
-      <span style={{ color: C.mint }}>● READY</span>
-    ) : dot > 0 ? (
-      <span style={{ color: C.coral }}>● CLONING</span>
-    ) : recording ? (
-      <span style={{ color: C.coral }}>● REC</span>
+      <span style={{ color: C.coral }}>● READY</span>
     ) : (
-      <span style={{ color: C.dim }}>○ STANDBY</span>
+      <span style={{ color: C.coral }}>● CLONING</span>
     );
-  const waveW = CL.left.w - 48;
-  const waveH = 104;
-  const arrowY = CL.clipY + CL.clipH / 2;
-  const segL = { a: CL.left.x + CL.left.w + 20, b: CL.nodeX - CL.nodeR - 14 };
-  const segR = { a: CL.nodeX + CL.nodeR + 14, b: CL.right.x - 20 };
-  // 点の位置（左の線 → ノード → 右の線）
-  const dotX = dot < 0.45 ? mix(segL.a, segL.b, dot / 0.45) : dot < 0.55 ? CL.nodeX : mix(segR.a, segR.b, (dot - 0.55) / 0.45);
-  const dotColor = dot < 0.5 ? C.coral : C.mint;
+  const scrW = 256 - 36;
+  return (
+    <div style={{ position: "absolute", left: CH3.x, top: CH3.y, width: STRIP.w, height: STRIP.h }}>
+      {/* 空きスロット（点線） */}
+      {mat < 1 && (
+        <div style={{ position: "absolute", inset: 0, opacity: slot * (1 - mat), transform: `translateY(${(1 - slot) * 24}px)` }}>
+          <svg width={STRIP.w} height={STRIP.h} style={{ position: "absolute", left: 0, top: 0 }}>
+            <rect
+              x={1}
+              y={1}
+              width={STRIP.w - 2}
+              height={STRIP.h - 2}
+              rx={18}
+              fill="rgba(255,255,255,0.015)"
+              stroke={incoming > 0 ? C.coral : C.borderHi}
+              strokeOpacity={incoming > 0 ? 0.5 + 0.5 * incoming : 1}
+              strokeWidth={2}
+              strokeDasharray="10 10"
+            />
+          </svg>
+          <div style={{ position: "absolute", left: 0, right: 0, top: STRIP.h / 2 - 64, display: "flex", flexDirection: "column", alignItems: "center", gap: 14 }}>
+            <svg width={56} height={56} viewBox="0 0 56 56">
+              <circle cx={28} cy={28} r={26} fill="none" stroke={C.borderHi} strokeWidth={2} />
+              <path d="M28 17v22M17 28h22" stroke={C.sub} strokeWidth={2.4} strokeLinecap="round" />
+            </svg>
+            <div style={mono(20, C.sub, { letterSpacing: "0.2em" })}>CH 3</div>
+            <div style={mono(15, C.dim, { fontWeight: 500, letterSpacing: "0.18em" })}>EMPTY</div>
+          </div>
+        </div>
+      )}
+      {/* 本物のチャンネル */}
+      {mat > 0 && (
+        <div style={{ position: "absolute", inset: 0, opacity: mat, transform: `scale(${mix(0.96, 1, mat)})` }}>
+          <Panel
+            w={STRIP.w}
+            h={STRIP.h}
+            header={<span style={{ color: C.text }}>CH 3</span>}
+            status={status}
+            accent={C.coral}
+            glow={Math.max(0.55 * flash, playing ? 0.35 : 0, (1 - ready) * 0.25 * mat)}
+          >
+            <div style={{ position: "absolute", top: 82, left: 104 }}>
+              <div style={mono(14, C.coral, { letterSpacing: "0.18em" })}>NEW VOICE</div>
+              <div style={{ fontFamily: FONT, fontWeight: 900, fontSize: 34, lineHeight: "44px", color: C.text, whiteSpace: "nowrap" }}>自分の声</div>
+            </div>
+            <div
+              style={{
+                position: "absolute",
+                left: 22,
+                top: 172,
+                width: 256,
+                height: 118,
+                borderRadius: 14,
+                boxSizing: "border-box",
+                background: "#0A0C10",
+                border: `1.5px solid ${fillP > 0 && ready < 1 ? C.coral : playing ? C.coral : C.border}`,
+                overflow: "hidden",
+              }}
+            >
+              <div style={{ position: "absolute", left: 18, top: 24 }}>
+                <ClipWave width={scrW} height={70} color={C.coral} fill={fillP} ghost={mat} />
+              </div>
+              {fillP > 0 && fillP < 1 && (
+                <div style={{ position: "absolute", left: 18 + scrW * fillP, top: 10, bottom: 10, width: 2, background: C.coral, boxShadow: `0 0 10px ${C.coral}` }} />
+              )}
+              {playing && (
+                <div
+                  style={{
+                    position: "absolute",
+                    left: 18 + scrW * sweep,
+                    top: 8,
+                    bottom: 8,
+                    width: 2,
+                    background: C.text,
+                    opacity: Math.sin(Math.PI * sweep) ** 0.5,
+                    boxShadow: `0 0 12px ${C.text}`,
+                  }}
+                />
+              )}
+            </div>
+            <div style={{ position: "absolute", left: 60, top: 318 }}>
+              <VUMeter width={22} height={172} segments={18} value={lvl} />
+            </div>
+            <div style={{ position: "absolute", left: 122, top: 318 }}>
+              <Fader h={172} v={fv} color={C.coral} lit={Math.max(ready * 0.5, fillP > 0 && fillP < 1 ? 0.8 : 0, playing ? 1 : 0)} />
+            </div>
+            <div
+              style={{
+                position: "absolute",
+                left: 0,
+                right: 0,
+                top: 504,
+                textAlign: "center",
+                ...mono(15, fillP > 0.2 ? C.text : C.dim, { fontWeight: 500, letterSpacing: "0.08em" }),
+                fontVariantNumeric: "tabular-nums",
+              }}
+            >
+              {dbText(fv)} <span style={{ color: C.sub }}>dB</span>
+            </div>
+          </Panel>
+          <Avatar
+            x={56}
+            y={114}
+            r={AV_R}
+            icon={userIcon}
+            color={C.coral}
+            env={lvl}
+            lit={Math.max(flash, playing ? 0.9 * Math.sin(Math.PI * sweep) ** 0.3 : 0)}
+            scale={springAt(t, TM.land, { damping: 12, stiffness: 190 })}
+          />
+        </div>
+      )}
+    </div>
+  );
+};
+
+// ───────── t3-5: テープデッキ ─────────
+const Deck: React.FC<{ t: number }> = ({ t }) => {
+  const inP = prog(t, TM.deckIn, TM.deckIn + 0.6, ease.outQuint);
+  if (inP <= 0) return null;
+  const cnt = prog(t, TM.recA, TM.recB, ease.linear);
+  // リールは録音の間だけ回る（入りと止まりはなめらかに）
+  const spin = prog(t, TM.recA - 0.08, TM.recB + 0.3, ease.inOut);
+  const recording = t >= TM.recA && t < TM.recB + 0.04;
+  const done = prog(t, TM.recB, TM.recB + 0.25);
+  const status = recording ? (
+    <span style={{ color: C.red }}>● REC</span>
+  ) : done > 0.5 ? (
+    <span style={{ color: C.coral }}>✓ 30 SEC</span>
+  ) : (
+    <span style={{ color: C.dim }}>○ STANDBY</span>
+  );
   return (
     <div
       style={{
         position: "absolute",
-        left: CLONE.x,
-        top: CLONE.y,
+        left: DECK_POS.x,
+        top: DECK_POS.y,
         opacity: inP,
         transform: `translateY(${(1 - inP) * 56}px)`,
       }}
     >
-      <Panel
-        w={CLONE.w}
-        h={CLONE.h}
-        header={
-          <>
-            <span style={{ color: C.text }}>VOICE CLONE</span>
-            <span style={{ color: C.dim, fontWeight: 500, letterSpacing: "0.06em" }}>— 30 SEC SAMPLE</span>
-          </>
-        }
+      <TapeDeck
+        cnt={cnt}
+        angle={spin * 360 * 4}
+        recording={recording}
+        done={done}
         status={status}
-        accent={ready > 0.5 ? C.mint : C.coral}
-        glow={ready > 0 ? 0.35 * (1 - prog(t, TM.drawB + 0.2, TM.drawB + 1.2)) : 0}
-      >
-        {/* 左: SAMPLE */}
-        <div style={{ position: "absolute", left: CL.left.x, top: CL.titleY, width: CL.left.w, height: 72, display: "flex", alignItems: "flex-end", justifyContent: "space-between" }}>
-          <div style={{ display: "flex", alignItems: "center", gap: 12, paddingBottom: 8 }}>
-            <div
-              style={{
-                width: 12,
-                height: 12,
-                borderRadius: 6,
-                background: recording ? C.red : C.dim,
-                boxShadow: recording ? `0 0 10px ${C.red}` : undefined,
-              }}
-            />
-            <IconMic size={30} color={C.coral} sw={1.8} />
-            <span style={mono(20, C.text, { letterSpacing: "0.18em" })}>SAMPLE</span>
-          </div>
-          <div style={{ display: "flex", alignItems: "baseline", gap: 10 }}>
-            <span
-              style={{
-                fontFamily: MONO,
-                fontWeight: 700,
-                fontSize: 64,
-                lineHeight: 1,
-                color: cnt > 0 ? C.coral : C.dim,
-                fontVariantNumeric: "tabular-nums",
-                textShadow: recording ? `0 0 18px ${C.coral}66` : undefined,
-              }}
-            >
-              00:{String(sec).padStart(2, "0")}
-            </span>
-          </div>
-        </div>
-        <Clip x={CL.left.x} w={CL.left.w} color={C.coral} lit={recLit}>
-          <div style={{ position: "absolute", left: 24, top: (CL.clipH - waveH) / 2 }}>
-            <ClipWave width={waveW} height={waveH} color={C.coral} fill={cnt} />
-          </div>
-          {recording && cnt > 0 && cnt < 1 && (
-            <div
-              style={{
-                position: "absolute",
-                left: 24 + waveW * cnt,
-                top: 12,
-                bottom: 12,
-                width: 2,
-                background: C.coral,
-                boxShadow: `0 0 10px ${C.coral}`,
-              }}
-            />
-          )}
-        </Clip>
-        {/* 目盛り 0〜30s */}
-        <div style={{ position: "absolute", left: CL.left.x + 24, top: CL.clipY + CL.clipH + 12, width: waveW, height: 30 }}>
-          {[0, 10, 20, 30].map((s) => (
-            <div key={s} style={{ position: "absolute", left: (waveW * s) / 30, top: 0 }}>
-              <div style={{ width: 2, height: 8, background: cnt * 30 >= s - 0.01 ? C.coral : C.border, marginLeft: -1 }} />
-              <div
-                style={{
-                  position: "absolute",
-                  top: 12,
-                  left: s === 30 ? -40 : s === 0 ? 0 : -12,
-                  ...mono(14, C.dim, { fontWeight: 500, letterSpacing: "0.04em" }),
-                }}
-              >
-                {s === 30 ? "30s" : s === 0 ? "0" : s}
-              </div>
-            </div>
-          ))}
-        </div>
-
-        {/* 中央: 矢印と CLONE ノード */}
-        <svg width={CLONE.w} height={CLONE.h} style={{ position: "absolute", left: 0, top: 0, overflow: "visible" }}>
-          {arrowDraw > 0.01 && (
-            <>
-              <line x1={segL.a} y1={arrowY} x2={mix(segL.a, segL.b, arrowDraw)} y2={arrowY} stroke={C.borderHi} strokeWidth={2.5} strokeDasharray="6 8" strokeLinecap="round" />
-              <line x1={segR.a} y1={arrowY} x2={mix(segR.a, segR.b, arrowDraw)} y2={arrowY} stroke={C.borderHi} strokeWidth={2.5} strokeDasharray="6 8" strokeLinecap="round" />
-            </>
-          )}
-          {arrowDraw > 0.95 && (
-            <path d={`M${segR.b - 12} ${arrowY - 10} L${segR.b} ${arrowY} L${segR.b - 12} ${arrowY + 10}`} fill="none" stroke={fill > 0 ? C.mint : C.borderHi} strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round" />
-          )}
-          <circle cx={CL.nodeX} cy={arrowY} r={CL.nodeR} fill={C.panelHi} stroke={C.borderHi} strokeWidth={1.5} opacity={arrowDraw} />
-          {ring > 0 && (
-            <circle
-              cx={CL.nodeX}
-              cy={arrowY}
-              r={CL.nodeR + 8}
-              fill="none"
-              stroke={C.mint}
-              strokeWidth={3.5}
-              strokeLinecap="round"
-              strokeDasharray={`${2 * Math.PI * (CL.nodeR + 8) * ring} 9999`}
-              transform={`rotate(-90 ${CL.nodeX} ${arrowY})`}
-              style={{ filter: `drop-shadow(0 0 5px ${C.mint})` }}
-            />
-          )}
-          {dot > 0 && dot < 1 && (dot < 0.45 || dot > 0.55) && (
-            <circle cx={dotX} cy={arrowY} r={7} fill={dotColor} style={{ filter: `drop-shadow(0 0 7px ${dotColor})` }} />
-          )}
-        </svg>
-        <div style={{ position: "absolute", left: CL.nodeX - 20, top: arrowY - 20, opacity: arrowDraw }}>
-          <IconCopy size={40} color={ring >= 1 ? C.mint : C.sub} sw={1.7} />
-        </div>
-        <div style={{ position: "absolute", left: CL.nodeX - 100, width: 200, top: arrowY + CL.nodeR + 16, textAlign: "center", opacity: arrowDraw, ...mono(15, ring >= 1 ? C.mint : C.sub) }}>
-          CLONE
-        </div>
-
-        {/* 右: YOUR VOICE */}
-        <div
-          style={{
-            position: "absolute",
-            left: CL.right.x,
-            top: CL.titleY,
-            width: CL.right.w,
-            height: 72,
-            display: "flex",
-            alignItems: "flex-end",
-            justifyContent: "space-between",
-            opacity: mix(0.45, 1, ghost),
-          }}
-        >
-          <div style={{ display: "flex", alignItems: "center", gap: 12, paddingBottom: 8 }}>
-            <IconUser size={28} color={C.mint} sw={1.9} />
-            <span style={mono(20, C.text, { letterSpacing: "0.18em" })}>YOUR VOICE</span>
-          </div>
-          <span style={{ fontFamily: FONT, fontWeight: 900, fontSize: 46, lineHeight: 1, color: fill > 0.98 ? C.text : C.sub, paddingBottom: 4 }}>
-            自分の声
-          </span>
-        </div>
-        <Clip x={CL.right.x} w={CL.right.w} color={C.mint} lit={ready * (1 - 0.5 * prog(t, TM.drawB + 0.3, TM.drawB + 1.2))}>
-          <div style={{ position: "absolute", left: 24, top: (CL.clipH - waveH) / 2 }}>
-            <ClipWave width={waveW} height={waveH} color={C.mint} fill={fill} ghost={ghost} />
-          </div>
-          {fill > 0 && fill < 1 && (
-            <div style={{ position: "absolute", left: 24 + waveW * fill, top: 12, bottom: 12, width: 2, background: C.mint, boxShadow: `0 0 10px ${C.mint}` }} />
-          )}
-          {/* できた声を一度だけ試聴する再生ヘッド */}
-          {sweep > 0 && sweep < 1 && (
-            <div
-              style={{
-                position: "absolute",
-                left: 24 + waveW * sweep,
-                top: 8,
-                bottom: 8,
-                width: 2,
-                background: C.text,
-                opacity: Math.sin(Math.PI * sweep) ** 0.5,
-                boxShadow: `0 0 12px ${C.text}`,
-              }}
-            />
-          )}
-        </Clip>
-        {/* 注記: 本人の同意が必要 */}
-        <div
-          style={{
-            position: "absolute",
-            left: CL.right.x,
-            top: CL.clipY + CL.clipH + 18,
-            height: 48,
-            padding: "0 20px 0 14px",
-            borderRadius: 12,
-            boxSizing: "border-box",
-            display: "flex",
-            alignItems: "center",
-            gap: 12,
-            border: `1.5px solid ${C.coral}77`,
-            background: C.coralSoft,
-            opacity: clamp01(consent * 2),
-            transform: `translateY(${(1 - consent) * 14}px)`,
-            transformOrigin: "0 50%",
-          }}
-        >
-          <IconLock size={26} color={C.coral} sw={2} />
-          <span style={{ fontFamily: FONT, fontWeight: 700, fontSize: 24, color: C.text, whiteSpace: "nowrap" }}>本人の同意が必要</span>
-          <span style={mono(13, C.sub, { letterSpacing: "0.14em", marginLeft: 4 })}>CONSENT REQUIRED</span>
-        </div>
-      </Panel>
+        glow={recording ? 0.3 : 0.4 * done * (1 - prog(t, TM.recB, TM.recB + 0.9))}
+      />
     </div>
+  );
+};
+
+// ───────── t3-5: デッキの OUT → CH 3 のパッチケーブル ─────────
+const Patch3: React.FC<{ t: number }> = ({ t }) => {
+  const jack = prog(t, TM.recB, TM.recB + 0.3);
+  if (jack <= 0) return null;
+  const draw = prog(t, TM.patch, TM.plug3, ease.inOut);
+  const plugged = t >= TM.plug3;
+  const pulse = prog(t, TM.send, TM.land, ease.inOut);
+  const a = CAB_3.pt(0);
+  const b = CAB_3.pt(1);
+  const tip = CAB_3.pt(draw);
+  const p = CAB_3.pt(pulse);
+  return (
+    <svg width={1920} height={1080} style={{ position: "absolute", left: 0, top: 0, overflow: "visible" }}>
+      {draw > 0 && (
+        <path
+          d={CAB_3.d}
+          fill="none"
+          stroke={plugged ? C.coral : C.borderHi}
+          strokeOpacity={plugged ? 0.55 : 1}
+          strokeWidth={3}
+          strokeLinecap="round"
+          strokeDasharray={`${CAB_3.len * draw} 9999`}
+        />
+      )}
+      <circle cx={a.x} cy={a.y} r={7} fill={C.panel} stroke={C.coral} strokeWidth={2.5} opacity={jack} />
+      {draw > 0 && draw < 1 && <circle cx={tip.x} cy={tip.y} r={5} fill={C.coral} />}
+      {draw > 0 && <circle cx={b.x} cy={b.y} r={7} fill={plugged ? C.coral : C.panel} stroke={plugged ? C.coral : C.borderHi} strokeWidth={2.5} />}
+      {pulse > 0 && pulse < 1 && (
+        <circle cx={p.x} cy={p.y} r={8} fill={C.text} stroke={C.coral} strokeWidth={3} style={{ filter: `drop-shadow(0 0 8px ${C.coral})` }} />
+      )}
+    </svg>
   );
 };
 
 // ───────── 本体 ─────────
 export const T3Dialogue: React.FC = () => {
   const t = useTime();
-  // 縮む（右上を支点）→ 見出しの右に抜けてから上がる、の 2 段
-  const sp = prog(t, TM.shrinkA, TM.shrinkA + 0.5, ease.inOut);
-  const lift = prog(t, TM.shrinkA + 0.3, TM.shrinkA + 0.68, ease.inOut);
-  const s = mix(1, SHRINK.s, sp);
-  const ty = mix(0, SHRINK.top - MIX_Y, lift);
   return (
     <SceneShell id="t3">
-      {/* ミキサー一式（t3-5 で右上へ縮む） */}
-      <div
-        style={{
-          position: "absolute",
-          left: 0,
-          top: 0,
-          width: 1920,
-          height: 1080,
-          transformOrigin: `${1920 - PAD_X}px ${MIX_Y}px`,
-          transform: `translateY(${ty}px) scale(${s})`,
-          opacity: mix(1, 0.55, sp),
-        }}
-      >
-        <Cables t={t} layer="under" />
-        <Strip t={t} side="A" />
-        <Strip t={t} side="B" />
-        <Sheet t={t} />
-        <Cables t={t} layer="over" />
-        <Duo t={t} />
-        <Avatars t={t} />
-      </div>
+      <Cables t={t} layer="under" />
+      <Strip t={t} side="A" />
+      <Strip t={t} side="B" />
+      <Sheet t={t} />
+      <Cables t={t} layer="over" />
+      <Duo t={t} />
+      <Avatars t={t} />
+      <Channel3 t={t} />
+      <Deck t={t} />
+      <Patch3 t={t} />
       <Headline t={t} />
-      <Clone t={t} />
 
-      <Sfx at={TM.duo} name="pop" volume={0.16} />
-      <Sfx at={TM.duo + 0.12} name="pop" volume={0.13} />
+      <Sfx at={TM.duo} name="pop" volume={0.18} />
       <Sfx at={TM.typeA} name="type" volume={0.14} />
       <Sfx at={TM.plug} name="click" volume={0.22} />
       <Sfx at={TM.arrive} name="tick" volume={0.2} />
-      <Sfx at={TM.countA} name="tick" volume={0.16} />
-      <Sfx at={TM.drawB} name="chime" volume={0.16} />
-      <Sfx at={TM.consent} name="click" volume={0.15} />
+      <Sfx at={TM.recA} name="tick" volume={0.16} />
+      <Sfx at={TM.plug3} name="click" volume={0.2} />
+      <Sfx at={TM.fillB} name="chime" volume={0.16} />
     </SceneShell>
   );
 };

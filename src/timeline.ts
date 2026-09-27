@@ -114,7 +114,7 @@ export const wipeInto = (id: string) => {
   const prev = TL.sections[s.index - 1];
   const a = prev.lastEnd + 0.12;
   const b = s.start - 0.06;
-  return { a, b, mid: (a + b) / 2, uncover: a + (b - a) * 0.66 };
+  return { a, b, mid: (a + b) / 2, uncover: a + (b - a) * 0.72 };
 };
 
 /** シーンが見え始める時刻（テープが抜け始めるころ）。最初のシーンは 0 */

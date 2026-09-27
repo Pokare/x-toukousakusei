@@ -9,73 +9,73 @@
       "gainDb": 0.0,
       "gemini": {
         "voice": "Charon",
-        "style": "深夜の音楽番組のナビゲーター。落ち着いた低めの声で、近い距離から語りかけるように。テンポはやや速め、要点ははっきり、語尾は静かに下げる。"
+        "style": "深夜のスタジオで話すナビゲーター。落ち着いた低めの声で、マイクに近い距離から静かに語りかける。テンポはやや速め、語尾は静かに下げる。"
       },
       "openjtalk": {
         "halfTone": -1.0,
         "speed": 1.1
       }
     },
-    "whisper": {
-      "gainDb": -7.0,
+    "designed": {
+      "gainDb": -1.0,
       "gemini": {
-        "voice": "Leda",
-        "style": "ささやき声。耳元で秘密を打ち明けるように、息を多めに混ぜて小声で。冒頭は少しためてから話し始める。"
+        "voice": "Algenib",
+        "style": "ハスキーで少しけだるい、深夜のバーのマスター。低くかすれた声で、ゆっくり、客を迎えるように。冒頭は少し間をとる。"
       },
       "openjtalk": {
-        "halfTone": 1.0,
-        "speed": 0.95
+        "halfTone": -4.0,
+        "speed": 0.9
       }
     },
-    "laugh": {
-      "gainDb": 0.0,
+    "take1": {
+      "gainDb": -2.0,
       "gemini": {
         "voice": "Leda",
-        "style": "冒頭の「あはは」で本当に吹き出して笑う。そのまま笑いをこらえきれずに、信じられないという調子で聞き返す。"
-      },
-      "openjtalk": {
-        "halfTone": 2.5,
-        "speed": 1.1
-      }
-    },
-    "sigh": {
-      "gainDb": -3.0,
-      "gemini": {
-        "voice": "Leda",
-        "style": "深く長いため息から始める。疲れ切って、力なく、ひとりごとのようにつぶやく。"
+        "style": "眠そうに。まぶたが重く、あくびをこらえながら、ゆっくり小さめの声で。"
       },
       "openjtalk": {
         "halfTone": 0.0,
         "speed": 0.85
       }
     },
-    "designed": {
-      "gainDb": -1.0,
-      "gemini": {
-        "voice": "Gacrux",
-        "style": "深夜ラジオの、落ち着いた低めの女性DJ。少しハスキーで柔らかく、マイクに近い距離でゆったりと、微笑みながら話す。"
-      },
-      "openjtalk": {
-        "halfTone": -3.0,
-        "speed": 0.92
-      }
-    },
-    "speakerA": {
+    "take2": {
       "gainDb": 0.0,
       "gemini": {
         "voice": "Leda",
-        "style": "明るい女性。得意げに、さらっと種明かしをするように。"
+        "style": "はしゃいで。うれしくてたまらない様子で、明るく弾むように、少し早口で。"
       },
       "openjtalk": {
-        "halfTone": 2.0,
+        "halfTone": 3.0,
+        "speed": 1.2
+      }
+    },
+    "take3": {
+      "gainDb": -1.0,
+      "gemini": {
+        "voice": "Leda",
+        "style": "泣くのをこらえて。声を震わせながら、ぐっと涙をこらえて、ゆっくり。"
+      },
+      "openjtalk": {
+        "halfTone": 1.0,
+        "speed": 0.85
+      }
+    },
+    "dj": {
+      "gainDb": 0.0,
+      "gemini": {
+        "voice": "Sulafat",
+        "style": "深夜ラジオの女性DJ。温かく、少し茶目っ気のある進行で、ゲストを呼び込む。"
+      },
+      "openjtalk": {
+        "halfTone": 1.5,
         "speed": 1.05
       }
     },
-    "speakerB": {
+    "guest": {
       "gainDb": 0.0,
       "gemini": {
         "voice": "Puck",
-        "style": "若い男性。本気で驚いて、身を乗り出して聞き返す。"
+        "style": "ゲストの男性。軽く挨拶したあと、もう本番だと気づいて本気で慌てる。"
       },
       "openjtalk": {
         "halfTone": -5.0,

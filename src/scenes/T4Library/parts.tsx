@@ -1,4 +1,4 @@
-// TRACK 04 専用の小物: フレーズ検出、色の補間、テープカウンター風の数字、棚のテープ、LED ウォール、言語チューナー
+// TRACK 04 専用の小物: フレーズ検出、色の補間、テープカウンター風の数字、棚のテープ、LED ウォール、声のレベル
 import React from "react";
 import { C, DISPLAY, FPS, MONO } from "../../theme";
 import { LEVELS, line } from "../../timeline";
@@ -260,12 +260,7 @@ export const LedWall: React.FC<{
   );
 };
 
-// ───────── 言語チューナー ─────────
-export const CODES = [
-  "JA", "EN-US", "EN-GB", "ES-ES", "ES-MX", "FR-FR", "FR-CA", "PT-BR", "DE", "IT",
-  "KO", "ZH-CN", "ZH-TW", "HI", "AR", "TR", "VI", "TH", "ID", "NL",
-];
-
+// ───────── 声のレベル ─────────
 /** 時刻 sec に話している t4 の行の音量（0〜1）。行間は 0 */
 export const rmsAtTime = (ids: string[], sec: number) => {
   for (const id of ids) {
@@ -276,34 +271,4 @@ export const rmsAtTime = (ids: string[], sec: number) => {
     return r[Math.max(0, Math.min(r.length - 1, k))] ?? 0;
   }
   return 0;
-};
-
-export const Chip: React.FC<{ code: string; lit: number; flash: number; live: number }> = ({ code, lit, flash, live }) => {
-  const border = lit > 0 ? lerpColor(C.borderHi, C.mint, lit) : C.borderHi;
-  const [lang, region] = code.split("-");
-  return (
-    <div
-      style={{
-        height: 36,
-        padding: "0 10px",
-        display: "flex",
-        alignItems: "center",
-        borderRadius: 9,
-        border: `1.5px solid ${border}`,
-        background: lit > 0 ? `rgba(59, 227, 180, ${0.1 * lit + 0.22 * flash})` : C.panel,
-        boxShadow: lit > 0 ? `0 0 ${Math.round(8 + 18 * flash + 8 * live)}px rgba(59, 227, 180, ${0.18 * lit + 0.35 * flash})` : undefined,
-        fontFamily: MONO,
-        fontWeight: 700,
-        fontSize: 17,
-        letterSpacing: "0.06em",
-        whiteSpace: "nowrap",
-        transform: `scale(${1 + 0.1 * flash})`,
-      }}
-    >
-      <span style={{ color: lit > 0 ? lerpColor(C.dim, C.text, lit) : C.dim }}>{lang}</span>
-      {region && (
-        <span style={{ color: lit > 0 ? lerpColor(C.dim, C.mint, lit) : C.dim, opacity: 0.95 }}>-{region}</span>
-      )}
-    </div>
-  );
 };

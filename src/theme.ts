@@ -37,10 +37,10 @@ export const STAGE_BOTTOM = 880; // ここより下は字幕エリア
 
 // 声の種類 → 字幕につく札
 export const VOICE_TAG: Record<string, { label: string; color: string } | undefined> = {
-  whisper: { label: "ささやき", color: C.mint },
-  laugh: { label: "笑い", color: C.mint },
-  sigh: { label: "ため息", color: C.mint },
-  designed: { label: "デザインした声", color: C.coral },
-  speakerA: { label: "話者 A", color: C.coral },
-  speakerB: { label: "話者 B", color: C.mint },
+  designed: { label: "注文した声", color: C.coral },
+  take1: { label: "TAKE 1 · 眠そうに", color: C.mint },
+  take2: { label: "TAKE 2 · はしゃいで", color: C.mint },
+  take3: { label: "TAKE 3 · 泣くのをこらえて", color: C.mint },
+  dj: { label: "DJ", color: C.coral },
+  guest: { label: "GUEST", color: C.mint },
 };

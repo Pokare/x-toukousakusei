@@ -2,7 +2,7 @@
 import React from "react";
 import { C, DISPLAY, FONT, FPS, MONO } from "../../theme";
 import { LEVELS, section } from "../../timeline";
-import { clamp01 } from "../../time";
+import { clamp01, rand } from "../../time";
 
 /** "#RRGGBB" または "rgb(r, g, b)" を [r, g, b] に */
 const parse = (c: string): [number, number, number] => {
@@ -133,7 +133,9 @@ export const Chip: React.FC<{
   charge?: number;
   chargeColor?: string;
   label?: string;
-}> = ({ size, pins, accent, glow, charge = 0, chargeColor = C.coral, label = "AI" }) => {
+  /** 声に合わせたピンの脈動（0〜1、既定 1 = 常に明るい） */
+  pulse?: number;
+}> = ({ size, pins, accent, glow, charge = 0, chargeColor = C.coral, label = "AI", pulse = 1 }) => {
   const pinLen = 14;
   const pinT = 9;
   const per = 5;
@@ -162,8 +164,8 @@ export const Chip: React.FC<{
             position: "absolute",
             ...st,
             borderRadius: 2,
-            background: on > 0 ? mixColor(C.borderHi, col, on) : C.borderHi,
-            boxShadow: on > 0.5 ? `0 0 ${10 * on}px ${col}` : undefined,
+            background: on > 0 ? mixColor(C.borderHi, col, on * (0.6 + 0.4 * pulse)) : C.borderHi,
+            boxShadow: on > 0.5 ? `0 0 ${(4 + 10 * pulse) * on}px ${col}` : undefined,
           }}
         />,
       );
@@ -384,3 +386,117 @@ export const TrackLane: React.FC<{
     </div>
   );
 };
+
+/* ------------------------------------------------------------------ */
+/**
+ * 出力パネル用の合成波形（声の大きさに引っぱられず、常にはっきり動く）。
+ * live=0 で平らな暗い線、1 でミントの波。level で少しだけ振幅が増える。
+ */
+export const SynthWave: React.FC<{ w: number; h: number; t: number; live: number; level: number }> = ({ w, h, t, live, level }) => {
+  const N = 72;
+  const pts: string[] = [];
+  const amp = live * (0.55 + 0.35 * clamp01(level * 2.2));
+  for (let i = 0; i <= N; i++) {
+    const u = i / N;
+    const env = Math.sin(Math.PI * u) ** 1.2;
+    const y =
+      0.55 * Math.sin(2 * Math.PI * (2.2 * u) + t * 7.1) +
+      0.3 * Math.sin(2 * Math.PI * (5.3 * u) - t * 11.3 + 1.1) +
+      0.18 * Math.sin(2 * Math.PI * (9.1 * u) + t * 17.7 + 2.3);
+    pts.push(`${(u * w).toFixed(1)},${(h / 2 - y * env * amp * (h / 2) * 0.95).toFixed(1)}`);
+  }
+  const col = mixColor(C.dim, C.mint, live);
+  return (
+    <svg width={w} height={h} style={{ overflow: "visible", display: "block" }}>
+      <line x1={0} x2={w} y1={h / 2} y2={h / 2} stroke={C.border} strokeWidth={1} />
+      <polyline
+        points={pts.join(" ")}
+        fill="none"
+        stroke={col}
+        strokeWidth={2.5}
+        strokeLinejoin="round"
+        strokeLinecap="round"
+        style={live > 0.3 ? { filter: `drop-shadow(0 0 6px ${withAlpha(C.mint, live)})` } : undefined}
+      />
+    </svg>
+  );
+};
+
+/* ------------------------------------------------------------------ */
+/** 左右の端がちぎれたテープの輪郭（clip-path 用 polygon、% 指定） */
+const tornPolygon = (w: number, h: number, seed: number) => {
+  const teeth = 9;
+  const depth = 9;
+  const L: string[] = [];
+  const R: string[] = [];
+  for (let k = 0; k <= teeth; k++) {
+    const y = (k / teeth) * h;
+    const jl = (k % 2 ? depth : 0) + rand(seed + k) * 4;
+    const jr = (k % 2 ? 0 : depth) + rand(seed + 40 + k) * 4;
+    L.push(`${jl.toFixed(1)}px ${y.toFixed(1)}px`);
+    R.push(`${(w - jr).toFixed(1)}px ${y.toFixed(1)}px`);
+  }
+  return `polygon(${[...R, ...L.reverse()].join(", ")})`;
+};
+
+/**
+ * コンソールのチャンネルに貼る、手でちぎったマスキングテープのラベル。
+ * unroll: 左から貼られていく割合（0〜1）。sheen: 光が表面をなでる位置（0〜1、範囲外で非表示）。
+ */
+export const TapeLabel: React.FC<{
+  w: number;
+  h: number;
+  unroll: number;
+  sheen?: number;
+  children: React.ReactNode;
+}> = ({ w, h, unroll, sheen = -1, children }) => {
+  const u = clamp01(unroll);
+  const rollX = u * w;
+  return (
+    <div style={{ position: "relative", width: w, height: h, filter: "drop-shadow(0 16px 30px rgba(0,0,0,0.5))" }}>
+      <div style={{ position: "absolute", inset: 0, clipPath: `inset(-2px ${(1 - u) * 100}% -2px -2px)` }}>
+        <div
+          style={{
+            position: "absolute",
+            inset: 0,
+            clipPath: tornPolygon(w, h, 7),
+            background: `linear-gradient(180deg, rgba(255,255,255,0.14) 0%, rgba(255,255,255,0) 22%, rgba(0,0,0,0) 70%, rgba(0,0,0,0.10) 100%), repeating-linear-gradient(90deg, rgba(0,0,0,0.035) 0px, rgba(0,0,0,0.035) 1px, rgba(0,0,0,0) 1px, rgba(0,0,0,0) 9px), ${C.coral}`,
+            overflow: "hidden",
+          }}
+        >
+          <div style={{ position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center" }}>{children}</div>
+          {sheen > 0 && sheen < 1 && (
+            <div
+              style={{
+                position: "absolute",
+                top: -h,
+                left: mix(-0.35, 1.1, sheen) * w,
+                width: w * 0.22,
+                height: h * 3,
+                transform: "rotate(18deg)",
+                background: "linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.32) 50%, rgba(255,255,255,0) 100%)",
+              }}
+            />
+          )}
+        </div>
+      </div>
+      {/* 貼っている途中のロール（テープの芯） */}
+      {u > 0 && u < 1 && (
+        <div
+          style={{
+            position: "absolute",
+            left: rollX - 16,
+            top: -10,
+            width: 32,
+            height: h + 20,
+            borderRadius: 10,
+            background: `linear-gradient(90deg, #C9492A 0%, ${C.coral} 35%, #FF9B7A 55%, #D9532F 100%)`,
+            boxShadow: "6px 0 18px rgba(0,0,0,0.45)",
+          }}
+        />
+      )}
+    </div>
+  );
+};
+
+const mix = (a: number, b: number, p: number) => a + (b - a) * p;
