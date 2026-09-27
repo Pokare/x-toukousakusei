@@ -8,8 +8,8 @@
     "dev": "remotion studio src/index.ts",
     "tts": "node scripts/tts.mjs",
     "tts:placeholder": "node scripts/tts.mjs --provider openjtalk",
-    "render": "remotion render src/index.ts Main out/video.mp4 --codec=h264 --crf=18 --audio-bitrate=192k --pixel-format=yuv420p",
-    "still": "remotion still src/index.ts Main out/thumbnail.png --frame=330",
+    "render": "remotion render src/index.ts Main out/video.mp4 --codec=h264 --crf=18 --audio-bitrate=192k --pixel-format=yuv420p --color-space=bt709",
+    "still": "remotion still src/index.ts Main out/thumbnail.png --frame=320",
     "typecheck": "tsc --noEmit",
     "sfx": "node scripts/make-sfx.mjs"
   },
