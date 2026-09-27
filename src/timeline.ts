@@ -21,6 +21,8 @@ export type Line = {
 export type Section = {
   id: string;
   index: number;
+  label: string; // "TRACK 01" など
+  title: string; // トラック名
   start: number; // 最初の行の話し始め
   lastEnd: number; // 最後の行の話し終わり
   end: number; // 次のセクションの開始（最後はエンド）
@@ -64,6 +66,8 @@ const build = () => {
     sections.push({
       id: s.id,
       index: si,
+      label: (s as { label?: string }).label ?? s.id,
+      title: (s as { title?: string }).title ?? "",
       start: secLines[0].start,
       lastEnd: secLines[secLines.length - 1].end,
       end: 0,
@@ -102,3 +106,23 @@ export const section = (id: string): Section => {
 // 時刻 t に話している行（行間の無音では null）
 export const speakingAt = (t: number): Line | null =>
   TL.lines.find((l) => t >= l.start && t < l.end) ?? null;
+
+// トラック切り替えのテープワイプの時間。a〜b でテープが横切り、mid で画面が完全に覆われる。
+export const wipeInto = (id: string) => {
+  const s = section(id);
+  if (s.index === 0) return null;
+  const prev = TL.sections[s.index - 1];
+  const a = prev.lastEnd + 0.12;
+  const b = s.start - 0.06;
+  return { a, b, mid: (a + b) / 2, uncover: a + (b - a) * 0.66 };
+};
+
+/** シーンが見え始める時刻（テープが抜け始めるころ）。最初のシーンは 0 */
+export const sceneEnter = (id: string) => wipeInto(id)?.mid ?? 0;
+
+/** シーンが消える時刻（次のテープで画面が覆われた瞬間）。最後のシーンは動画の最後 */
+export const sceneExit = (id: string) => {
+  const s = section(id);
+  const next = TL.sections[s.index + 1];
+  return next ? wipeInto(next.id)!.mid : TL.total + 1;
+};

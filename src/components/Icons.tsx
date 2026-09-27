@@ -4,7 +4,7 @@ import { C } from "../theme";
 // 線画アイコン（24x24 基準）。size / color / strokeWidth で調整。
 type P = { size?: number; color?: string; sw?: number; style?: React.CSSProperties };
 
-const Svg: React.FC<P & { children: React.ReactNode }> = ({ size = 32, color = C.blue, sw = 1.8, style, children }) => (
+const Svg: React.FC<P & { children: React.ReactNode }> = ({ size = 32, color = C.coral, sw = 1.8, style, children }) => (
   <svg
     width={size}
     height={size}

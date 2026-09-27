@@ -3,13 +3,13 @@ import React from "react";
 import { Composition, registerRoot } from "remotion";
 import { ensureFonts } from "../fonts";
 import { Stage } from "../Stage";
-import { Outro } from "../scenes/Outro";
+import { T4Library } from "../scenes/T4Library";
 import { FPS, H, W } from "../theme";
 import { TOTAL_FRAMES } from "../timeline";
 
 ensureFonts();
 
-const Only: React.FC = () => <Stage sfx scenes={{ outro: Outro }} onlySection="outro" />;
+const Only: React.FC = () => <Stage sfx scenes={{ t4: T4Library }} onlySection="t4" />;
 
 registerRoot(() => (
   <Composition id="Scene" component={Only} durationInFrames={TOTAL_FRAMES} fps={FPS} width={W} height={H} />

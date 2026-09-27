@@ -1,80 +1,85 @@
 {
-  "title": "Gemini 3.8 Flash TTS、何がすごい？",
+  "title": "深夜の録音スタジオで聴く、Gemini 3.8 Flash TTS",
   "timing": {
-    "leadIn": 0.3,
+    "leadIn": 0.6,
     "lineGap": 0.35,
-    "sectionGap": 0.8,
-    "tail": 1.4
+    "sectionGap": 1.1,
+    "tail": 2.0
   },
   "sections": [
     {
-      "id": "intro",
+      "id": "open",
+      "label": "COLD OPEN",
       "lines": [
-        { "id": "intro-1", "text": "いま流れているこのナレーション、", "voice": "narrator" },
-        { "id": "intro-2", "text": "人の声ではありません。", "voice": "narrator" },
-        { "id": "intro-3", "text": "9月23日にGoogleが公開した、", "voice": "narrator", "yomi": "くがつにじゅうさんにちにグーグルがこうかいした、" },
-        { "id": "intro-4", "text": "Gemini 3.8 Flash TTSで作った声です。", "voice": "narrator", "yomi": "ジェミニさんてんはちフラッシュティーティーエスでつくったこえです。" },
-        { "id": "intro-5", "text": "何がすごいのか、", "voice": "narrator" },
-        { "id": "intro-6", "text": "5つに絞って見ていきます。", "voice": "narrator" }
+        { "id": "open-1", "text": "この声、録音じゃありません。", "voice": "narrator", "yomi": "このこえ、ろくおんじゃありません。" },
+        { "id": "open-2", "text": "台本を渡しただけで、AIが演じています。", "voice": "narrator", "yomi": "だいほんをわたしただけで、エーアイがえんじています。" },
+        { "id": "open-3", "text": "作ったのは、Googleの新しい音声モデル「Gemini 3.8 Flash TTS」。", "speak": "作ったのは、Googleの新しい音声モデル、Gemini 3.8 Flash TTS。", "voice": "narrator", "yomi": "つくったのは、グーグルのあたらしいおんせいモデル、ジェミニさんてんはちフラッシュティーティーエス。" },
+        { "id": "open-4", "text": "何ができるのか、5つのトラックで聴いてみましょう。", "voice": "narrator", "yomi": "なにができるのか、いつつのトラックできいてみましょう。" }
       ]
     },
     {
-      "id": "s1",
+      "id": "t1",
+      "label": "TRACK 01",
+      "title": "声を、文章でつくる",
       "lines": [
-        { "id": "s1-1", "text": "1つ目は、声の多さです。", "voice": "narrator" },
-        { "id": "s1-2", "text": "すぐ使える声が2000種類以上。", "voice": "narrator", "yomi": "すぐつかえるこえがにせんしゅるいいじょう。" },
-        { "id": "s1-3", "text": "対応する言語と方言は100を超えます。", "voice": "narrator", "yomi": "たいおうするげんごとほうげんはひゃくをこえます。" },
-        { "id": "s1-4", "text": "日本語だけでも115種類あり、", "voice": "narrator", "yomi": "にほんごだけでもひゃくじゅうごしゅるいあり、" },
-        { "id": "s1-5", "text": "東京・大阪・福岡の話し方まで選べます。", "voice": "narrator" }
+        { "id": "t1-1", "text": "トラック1は、ボイスデザイン。", "voice": "narrator", "yomi": "トラックワンは、ボイスデザイン。" },
+        { "id": "t1-2", "text": "ほしい声を文章で書くだけで、新しい声が作れます。", "voice": "narrator" },
+        { "id": "t1-3", "text": "たとえば「深夜ラジオの、落ち着いた低めの女性DJ」。", "speak": "たとえば、深夜ラジオの、落ち着いた低めの女性DJ。", "voice": "narrator", "yomi": "たとえば、しんやラジオの、おちついたひくめのじょせいディージェー。" },
+        { "id": "t1-4", "text": "こんばんは。今夜も、ゆっくりしていってくださいね。", "voice": "designed" }
       ]
     },
     {
-      "id": "s2",
+      "id": "t2",
+      "label": "TRACK 02",
+      "title": "演技は、1行ずつ",
       "lines": [
-        { "id": "s2-1", "text": "2つ目は、1行ずつ演技をつけられること。", "voice": "narrator", "yomi": "ふたつめは、いちぎょうずつえんぎをつけられること。" },
-        { "id": "s2-2", "text": "ねえ、ここだけの話なんだけど。", "voice": "whisper" },
-        { "id": "s2-3", "text": "あはは、それ本当に？", "voice": "laugh" },
-        { "id": "s2-4", "text": "はあ……また締め切りか。", "voice": "sigh", "yomi": "はあ、、またしめきりか。" },
-        { "id": "s2-5", "text": "こうした声色や間の取り方を、", "voice": "narrator", "yomi": "こうしたこわいろやまのとりかたを、" },
-        { "id": "s2-6", "text": "台本の行ごとに文章で指示できます。", "voice": "narrator" }
+        { "id": "t2-1", "text": "トラック2は、1行ずつの演技指示。", "voice": "narrator", "yomi": "トラックツーは、いちぎょうずつのえんぎしじ。" },
+        { "id": "t2-2", "text": "……ここだけの話、まだ誰にも言ってないんだ。", "speak": "ここだけの話、まだ誰にも言ってないんだ。", "voice": "whisper" },
+        { "id": "t2-3", "text": "あはは、うそでしょ？", "voice": "laugh" },
+        { "id": "t2-4", "text": "はぁ……今日も終電か。", "voice": "sigh", "yomi": "はぁ、、きょうもしゅうでんか。" },
+        { "id": "t2-5", "text": "ささやきも、笑いも、ため息も。台本に書き添えるだけです。", "voice": "narrator" }
       ]
     },
     {
-      "id": "s3",
+      "id": "t3",
+      "label": "TRACK 03",
+      "title": "2人の会話も、1本の台本で",
       "lines": [
-        { "id": "s3-1", "text": "3つ目は、ボイスデザイン。", "voice": "narrator" },
-        { "id": "s3-2", "text": "説明文を書くだけで、新しい声が作れます。", "voice": "narrator" },
-        { "id": "s3-3", "text": "「落ち着いた40代の女性ナレーター」と書いて", "voice": "narrator", "yomi": "おちついたよんじゅうだいのじょせいナレーター、とかいて" },
-        { "id": "s3-4", "text": "生まれたのが、この声です。", "voice": "designed" }
+        { "id": "t3-1", "text": "トラック3は、2人の会話。", "voice": "narrator", "yomi": "トラックスリーは、ふたりのかいわ。" },
+        { "id": "t3-2", "text": "1本の台本から、2人分の声をまとめて作れます。", "voice": "narrator", "yomi": "いっぽんのだいほんから、ふたりぶんのこえをまとめてつくれます。" },
+        { "id": "t3-3", "text": "「これ、ほんとに1回で作ってるの？」", "speak": "これ、ほんとに1回で作ってるの？", "voice": "speakerB", "yomi": "これ、ほんとにいっかいでつくってるの？" },
+        { "id": "t3-4", "text": "「うん。話者を書き分けておくだけ。」", "speak": "うん。話者を書き分けておくだけ。", "voice": "speakerA" },
+        { "id": "t3-5", "text": "30秒の音声があれば、自分の声を再現することもできます。", "voice": "narrator", "yomi": "さんじゅうびょうのおんせいがあれば、じぶんのこえをさいげんすることもできます。" }
       ]
     },
     {
-      "id": "s4",
+      "id": "t4",
+      "label": "TRACK 04",
+      "title": "声の品ぞろえ",
       "lines": [
-        { "id": "s4-1", "text": "4つ目は、2人の掛け合いを", "voice": "narrator", "yomi": "よっつめは、ふたりのかけあいを" },
-        { "id": "s4-2", "text": "1本の台本から作れること。", "voice": "narrator", "yomi": "いっぽんのだいほんからつくれること。" },
-        { "id": "s4-3", "text": "「え、この会話も一回で生成してるの？」", "speak": "え、この会話も一回で生成してるの？", "voice": "speakerB" },
-        { "id": "s4-4", "text": "「そう。台本を渡すだけで、2人分の声になるんです。」", "speak": "そう。台本を渡すだけで、2人分の声になるんです。", "voice": "speakerA", "yomi": "そう。だいほんをわたすだけで、ふたりぶんのこえになるんです。" },
-        { "id": "s4-5", "text": "30秒の音声サンプルから、", "voice": "narrator", "yomi": "さんじゅうびょうのおんせいサンプルから、" },
-        { "id": "s4-6", "text": "声を再現することもできます。", "voice": "narrator" }
+        { "id": "t4-1", "text": "トラック4は、声の品ぞろえ。", "voice": "narrator", "yomi": "トラックフォーは、こえのしなぞろえ。" },
+        { "id": "t4-2", "text": "すぐに使える声は、2000種類以上。", "voice": "narrator", "yomi": "すぐにつかえるこえは、にせんしゅるいいじょう。" },
+        { "id": "t4-3", "text": "しかも、100を超える言語と方言に対応しています。", "voice": "narrator", "yomi": "しかも、ひゃくをこえるげんごとほうげんにたいおうしています。" }
       ]
     },
     {
-      "id": "s5",
+      "id": "t5",
+      "label": "TRACK 05",
+      "title": "安心と、実力",
       "lines": [
-        { "id": "s5-1", "text": "5つ目は、安心して使える仕組みと実力です。", "voice": "narrator" },
-        { "id": "s5-2", "text": "作った音声にはすべてSynthIDの透かしが入り、", "voice": "narrator", "yomi": "つくったおんせいにはすべてシンスアイディーのすかしがはいり、" },
-        { "id": "s5-3", "text": "声の再現には本人の同意確認が必要です。", "voice": "narrator" },
-        { "id": "s5-4", "text": "Hume AIの声のデザイン評価では、", "voice": "narrator", "yomi": "ヒュームエーアイのこえのデザインひょうかでは、" },
-        { "id": "s5-5", "text": "総合1位を取りました。", "voice": "narrator", "yomi": "そうごういちいをとりました。" }
+        { "id": "t5-1", "text": "トラック5は、安心と実力。", "voice": "narrator", "yomi": "トラックファイブは、あんしんとじつりょく。" },
+        { "id": "t5-2", "text": "生成した音声には、すべてSynthIDの透かし入り。", "voice": "narrator", "yomi": "せいせいしたおんせいには、すべてシンスアイディーのすかしいり。" },
+        { "id": "t5-3", "text": "声の再現には、本人の同意確認が必要です。", "voice": "narrator" },
+        { "id": "t5-4", "text": "Hume AIの音声デザイン評価では、総合1位を獲得しました。", "voice": "narrator", "yomi": "ヒュームエーアイのおんせいデザインひょうかでは、そうごういちいをかくとくしました。" }
       ]
     },
     {
       "id": "outro",
+      "label": "ON AIR",
       "lines": [
-        { "id": "outro-1", "text": "文章を読み上げる道具から、演じる声優へ。", "voice": "narrator" },
-        { "id": "outro-2", "text": "Gemini APIとGoogle AI Studioで、", "voice": "narrator", "yomi": "ジェミニエーピーアイとグーグルエーアイスタジオで、" },
-        { "id": "outro-3", "text": "もう試せます。", "voice": "narrator" }
+        { "id": "outro-1", "text": "読み上げソフトから、演じる声優へ。", "voice": "narrator" },
+        { "id": "outro-2", "text": "Gemini APIとGoogle AI Studioで、今日から試せます。", "voice": "narrator", "yomi": "ジェミニエーピーアイとグーグルエーアイスタジオで、きょうからためせます。" },
+        { "id": "outro-3", "text": "ちなみにこの動画、声はGemini、映像はClaudeがコードで描きました。", "voice": "narrator", "yomi": "ちなみにこのどうが、こえはジェミニ、えいぞうはクロードがコードでえがきました。" }
       ]
     }
   ]

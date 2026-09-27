@@ -56,7 +56,7 @@ export const VoiceBars: React.FC<VoiceBarsProps> = ({
   width,
   height,
   barWidth,
-  color = C.blue,
+  color = C.coral,
   lines,
   shape = "bell",
   idle = "dot",

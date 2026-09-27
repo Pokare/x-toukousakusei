@@ -1,31 +1,15 @@
 import React from "react";
 import { AbsoluteFill } from "remotion";
-import { section } from "../timeline";
-import { ease, prog, useTime } from "../time";
+import { sceneEnter, sceneExit } from "../timeline";
+import { useTime } from "../time";
 
 /**
- * シーンの共通の入れ物。次のセクションに切り替わる直前に、
- * ぼかしながらフェードアウトする（元動画のトランジション）。
+ * シーンの共通の入れ物。トラック切り替えのテープが画面を覆っている間に
+ * 前のシーンから次のシーンへ切り替わるよう、表示する時間帯をそろえる。
+ * 入りのアニメーションは sceneEnter(id) を基準に始めるとテープが抜けるのと同時に動き出す。
  */
-export const SceneShell: React.FC<{
-  id: string;
-  exit?: "blur" | "none";
-  /** フェードアウトにかける秒数 */
-  exitDur?: number;
-  children: React.ReactNode;
-}> = ({ id, exit = "blur", exitDur = 0.55, children }) => {
+export const SceneShell: React.FC<{ id: string; children: React.ReactNode }> = ({ id, children }) => {
   const t = useTime();
-  const s = section(id);
-  const p = exit === "none" ? 0 : prog(t, s.end - exitDur, s.end + 0.05, ease.inOut);
-  return (
-    <AbsoluteFill
-      style={{
-        opacity: 1 - p,
-        filter: p > 0 ? `blur(${p * 14}px)` : undefined,
-        transform: p > 0 ? `scale(${1 - 0.02 * p})` : undefined,
-      }}
-    >
-      {children}
-    </AbsoluteFill>
-  );
+  if (t < sceneEnter(id) || t >= sceneExit(id)) return null;
+  return <AbsoluteFill>{children}</AbsoluteFill>;
 };

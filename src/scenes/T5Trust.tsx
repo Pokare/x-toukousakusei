@@ -4,10 +4,10 @@ import { SceneShell } from "../components/SceneShell";
 import { C, DISPLAY } from "../theme";
 
 // TODO: 実装する（仮置き）
-export const Outro: React.FC = () => (
-  <SceneShell id="outro">
+export const T5Trust: React.FC = () => (
+  <SceneShell id="t5">
     <AbsoluteFill style={{ justifyContent: "center", alignItems: "center" }}>
-      <div style={{ fontFamily: DISPLAY, fontSize: 96, color: C.text }}>ON AIR</div>
+      <div style={{ fontFamily: DISPLAY, fontSize: 96, color: C.text }}>TRACK 05 安心と実力</div>
     </AbsoluteFill>
   </SceneShell>
 );
