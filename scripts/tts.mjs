@@ -110,7 +110,10 @@ function cacheKey(l) {
 }
 
 const rawPath = (l) => join(cacheDir, `${cacheKey(l)}.wav`);
-const todo = lines.filter((l) => force || (only ? only.has(l.id) : false) || !existsSync(rawPath(l)));
+// --only のときは指定した行だけ作る（接続テストや部分的な作り直しで回数を使いすぎないように）
+const todo = only
+  ? lines.filter((l) => only.has(l.id))
+  : lines.filter((l) => force || !existsSync(rawPath(l)));
 
 console.log(`▶ プロバイダ: ${provider}${provider === "gemini" ? ` (${voices.gemini.model})` : "（仮音声）"}`);
 console.log(`  全 ${lines.length} 行 / 生成が必要 ${todo.length} 行`);
@@ -119,7 +122,10 @@ if (provider === "gemini") await runGemini(todo);
 else if (provider === "openjtalk") runOpenJTalk(todo);
 else throw new Error(`未知のプロバイダ: ${provider}`);
 
-if (!dryRun) finalize();
+const missing = lines.filter((l) => !existsSync(rawPath(l)));
+if (!dryRun && missing.length) {
+  console.log(`  まだ ${missing.length} 行が未生成なので、public/voice への書き出しはしません（全行そろったら書き出します）。`);
+} else if (!dryRun) finalize();
 
 // ---------------------------------------------------------------------------
 

@@ -91,7 +91,7 @@ async function viaGenerateContent({ key, model, text, voice, style, languageCode
   const parts = payload.candidates?.[0]?.content?.parts ?? [];
   const inline = parts.map((p) => p.inlineData || p.inline_data).find((d) => d?.data);
   if (!inline) return { ok: false, status: 500, error: "音声が返りませんでした" };
-  return { ok: true, wav: toWav(inline.data, inline.mimeType || inline.mime_type) };
+  return { ok: true, route: "generateContent", wav: toWav(inline.data, inline.mimeType || inline.mime_type) };
 }
 
 function retryDelaySec(errorBody) {
@@ -125,7 +125,10 @@ export async function synthesizeGemini({ text, voice, style, model, languageCode
       }));
       if (!r.ok) r.error = `interactions: ${first}\ngenerateContent: ${r.error}`;
     }
-    if (r.ok) return r.wav;
+    if (r.ok) {
+      if (process.env.TTS_DEBUG) console.log(`\n    (route: ${r.route ?? "interactions"})`);
+      return r.wav;
+    }
     lastErr = `HTTP ${r.status}: ${r.error}`;
     if (r.status === 429 || r.status >= 500 || r.status === 0) {
       const wait = r.status === 429 ? retryDelaySec(r.error) : 10 * (attempt + 1);

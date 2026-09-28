@@ -1,150 +1,150 @@
 {
-  "provider": "openjtalk",
-  "model": "open_jtalk/mei",
+  "provider": "gemini",
+  "model": "gemini-3.8-flash-tts",
   "lines": {
     "open-1": {
       "file": "voice/open-1.wav",
-      "duration": 3.68,
+      "duration": 3.94,
       "voice": "narrator"
     },
     "open-2": {
       "file": "voice/open-2.wav",
-      "duration": 2.87,
+      "duration": 3.21,
       "voice": "narrator"
     },
     "open-3": {
       "file": "voice/open-3.wav",
-      "duration": 5.28,
+      "duration": 6.85,
       "voice": "narrator"
     },
     "open-4": {
       "file": "voice/open-4.wav",
-      "duration": 3.21,
+      "duration": 3.08,
       "voice": "narrator"
     },
     "t1-1": {
       "file": "voice/t1-1.wav",
-      "duration": 2.61,
+      "duration": 2.69,
       "voice": "narrator"
     },
     "t1-2": {
       "file": "voice/t1-2.wav",
-      "duration": 3.76,
+      "duration": 3.91,
       "voice": "narrator"
     },
     "t1-3": {
       "file": "voice/t1-3.wav",
-      "duration": 4.07,
+      "duration": 4.23,
       "voice": "narrator"
     },
     "t1-4": {
       "file": "voice/t1-4.wav",
-      "duration": 3.2,
+      "duration": 4.04,
       "voice": "designed"
     },
     "t1-5": {
       "file": "voice/t1-5.wav",
-      "duration": 6.23,
+      "duration": 6.79,
       "voice": "narrator"
     },
     "t2-1": {
       "file": "voice/t2-1.wav",
-      "duration": 3.34,
+      "duration": 3.14,
       "voice": "narrator"
     },
     "t2-2": {
       "file": "voice/t2-2.wav",
-      "duration": 3.79,
+      "duration": 3.97,
       "voice": "take1"
     },
     "t2-3": {
       "file": "voice/t2-3.wav",
-      "duration": 2.7,
+      "duration": 2.4,
       "voice": "take2"
     },
     "t2-4": {
       "file": "voice/t2-4.wav",
-      "duration": 3.79,
+      "duration": 6.34,
       "voice": "take3"
     },
     "t2-5": {
       "file": "voice/t2-5.wav",
-      "duration": 3.57,
+      "duration": 3.79,
       "voice": "narrator"
     },
     "t3-1": {
       "file": "voice/t3-1.wav",
-      "duration": 2.07,
+      "duration": 2.04,
       "voice": "narrator"
     },
     "t3-2": {
       "file": "voice/t3-2.wav",
-      "duration": 3.91,
+      "duration": 3.95,
       "voice": "narrator"
     },
     "t3-3": {
       "file": "voice/t3-3.wav",
-      "duration": 2.61,
+      "duration": 3.46,
       "voice": "dj"
     },
     "t3-4": {
       "file": "voice/t3-4.wav",
-      "duration": 2.7,
+      "duration": 3.18,
       "voice": "guest"
     },
     "t4-1": {
       "file": "voice/t4-1.wav",
-      "duration": 2.23,
+      "duration": 2.84,
       "voice": "narrator"
     },
     "t4-2": {
       "file": "voice/t4-2.wav",
-      "duration": 3.13,
+      "duration": 4.14,
       "voice": "narrator"
     },
     "t4-3": {
       "file": "voice/t4-3.wav",
-      "duration": 3,
+      "duration": 3.4,
       "voice": "narrator"
     },
     "t4-4": {
       "file": "voice/t4-4.wav",
-      "duration": 4.81,
+      "duration": 5.13,
       "voice": "narrator"
     },
     "t5-1": {
       "file": "voice/t5-1.wav",
-      "duration": 2.45,
+      "duration": 2.32,
       "voice": "narrator"
     },
     "t5-2": {
       "file": "voice/t5-2.wav",
-      "duration": 5.54,
+      "duration": 6.41,
       "voice": "narrator"
     },
     "t5-3": {
       "file": "voice/t5-3.wav",
-      "duration": 4.06,
+      "duration": 4.72,
       "voice": "narrator"
     },
     "outro-1": {
       "file": "voice/outro-1.wav",
-      "duration": 2.42,
+      "duration": 2.53,
       "voice": "narrator"
     },
     "outro-2": {
       "file": "voice/outro-2.wav",
-      "duration": 2.83,
+      "duration": 3.01,
       "voice": "narrator"
     },
     "outro-3": {
       "file": "voice/outro-3.wav",
-      "duration": 3.49,
+      "duration": 3.93,
       "voice": "narrator"
     },
     "outro-4": {
       "file": "voice/outro-4.wav",
-      "duration": 3.31,
+      "duration": 3.88,
       "voice": "narrator"
     }
   }
