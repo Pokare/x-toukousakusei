@@ -1,0 +1,60 @@
+{
+  "note": "KEITO さんの投稿動画（2026-09-25）のナレーションを同じ方法で計測した集計値。音声そのものは含まない",
+  "method": "scripts/voice_metrics.py の analyze()。行の区切りは字幕の切り替わりと無音から手作業で決めた",
+  "roles": {
+    "narrator": {
+      "lines": 29,
+      "f0_median_hz": 280.6,
+      "f0_range_semitones": 11.2,
+      "loudness_dbfs": -14.9,
+      "mora_per_sec": 8.35
+    },
+    "acting(whisper)": {
+      "lines": 1,
+      "f0_median_hz": 228.4,
+      "f0_range_semitones": 8.1,
+      "loudness_dbfs": -20.6,
+      "mora_per_sec": 7.45
+    },
+    "acting(laugh)": {
+      "lines": 1,
+      "f0_median_hz": 304.1,
+      "f0_range_semitones": 13.4,
+      "loudness_dbfs": -14.3,
+      "mora_per_sec": 5.47
+    },
+    "acting(sigh)": {
+      "lines": 1,
+      "f0_median_hz": 228.2,
+      "f0_range_semitones": 4.2,
+      "loudness_dbfs": -17.2,
+      "mora_per_sec": 5.75
+    },
+    "designed": {
+      "lines": 1,
+      "f0_median_hz": 183.5,
+      "f0_range_semitones": 6.8,
+      "loudness_dbfs": -16.0,
+      "mora_per_sec": 6.95
+    },
+    "speaker(B)": {
+      "lines": 1,
+      "f0_median_hz": 245.2,
+      "f0_range_semitones": 18.0,
+      "loudness_dbfs": -15.2,
+      "mora_per_sec": 7.27
+    },
+    "speaker(A)": {
+      "lines": 1,
+      "f0_median_hz": 245.4,
+      "f0_range_semitones": 12.4,
+      "loudness_dbfs": -13.9,
+      "mora_per_sec": 8.71
+    }
+  },
+  "pauses": {
+    "line_gap_median_sec": 0.3,
+    "section_gap_median_sec": 0.8
+  },
+  "total_duration_sec": 100.65
+}

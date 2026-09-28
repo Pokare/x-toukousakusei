@@ -27,6 +27,8 @@ import { estimateMora } from "./lib/text.mjs";
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const OUT_RATE = 48000;
+// 発話部分の平均音量の目標。参考動画のナレーション（docs/reference-voice.json: -14.9 dBFS）に合わせる
+const TARGET_DBFS = -15;
 
 const args = process.argv.slice(2);
 const opt = (name, def) => {
@@ -210,7 +212,7 @@ function finalize() {
     if (!existsSync(p)) throw new Error(`音声がありません: ${l.id}`);
     const { samples, sampleRate } = readWav(p);
     let x = resample(trimSilence(samples, sampleRate, 0.04), sampleRate, OUT_RATE);
-    x = normalizeLoudness(x, OUT_RATE, -19 + (voiceOf(l).gainDb ?? 0));
+    x = normalizeLoudness(x, OUT_RATE, TARGET_DBFS + (voiceOf(l).gainDb ?? 0));
     const file = `voice/${l.id}.wav`;
     writeWav(join(ROOT, "public", file), x, OUT_RATE);
     const duration = +(x.length / OUT_RATE).toFixed(3);

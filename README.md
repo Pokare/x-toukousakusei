@@ -69,6 +69,9 @@ npm run tts
 #    特定の行だけ作り直す:    npm run tts -- --only t2-2,t2-3 --per-line
 #    キーなしで仮音声:        npm run tts:placeholder   （要: pip install pyopenjtalk-plus numpy）
 
+# 2.5) 声を数値でチェック（参考動画のナレーションと、声の高さ・話す速さ・音量を比較）
+python3 scripts/voice_metrics.py
+
 # 3) プレビュー（ブラウザで確認・微調整）
 npm run dev
 
@@ -119,6 +122,8 @@ scripts/tts.mjs           ナレーション生成（Gemini / 仮音声）→ pu
 scripts/providers/        Gemini 3.8 Flash TTS 呼び出し・仮音声
 scripts/lib/wav.mjs       WAV処理（行の切り分け、音量正規化、波形用の解析）
 scripts/make-sfx.mjs      効果音の合成
+scripts/voice_metrics.py  声の数値レポート（docs/reference-voice.json と比較）
+docs/reference-voice.json 参考動画のナレーションを計測した集計値（音声そのものは含まない）
 src/theme.ts              デザインシステム（色・フォント・配置）
 src/timeline.ts           音声の長さから全行・全パートの時刻を計算
 src/Stage.tsx             背景・シーン・声・計器表示・字幕・テープワイプの重ね合わせ

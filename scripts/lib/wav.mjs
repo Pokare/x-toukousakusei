@@ -296,19 +296,47 @@ export function resample(samples, from, to) {
   return out;
 }
 
-// 発話部分の平均音量を targetDb(dBFS) にそろえる。ピークは -1dBFS で頭打ち。
+// 発話部分の平均音量を targetDb(dBFS) にそろえる。
+// 一瞬のピークはリミッターで抑えるので、音割れさせずに目標の大きさまで上げられる。
 // ささやき等は voices.json の gainDb で意図的に小さくできる。
-export function normalizeLoudness(samples, sampleRate, targetDb = -20) {
+export function normalizeLoudness(samples, sampleRate, targetDb = -15) {
   const db = frameDb(samples, sampleRate, 10);
   const th = speechThreshold(db);
   const active = db.filter((d) => d >= th);
   if (!active.length) return samples;
   const meanPow = active.reduce((a, d) => a + Math.pow(10, d / 10), 0) / active.length;
   const cur = 10 * Math.log10(meanPow);
-  let g = Math.pow(10, (targetDb - cur) / 20);
-  let peak = 0;
-  for (const v of samples) peak = Math.max(peak, Math.abs(v));
-  const limit = Math.pow(10, -1 / 20);
-  if (peak * g > limit) g = limit / peak;
-  return samples.map((v) => v * g);
+  const g = Math.pow(10, (targetDb - cur) / 20);
+  return limit(samples.map((v) => v * g), sampleRate);
+}
+
+// 先読み付きのピークリミッター（上限 -1 dBFS）。
+// 5ms 先までの最大値から必要な減衰量を求め、戻りは 60ms かけてなめらかに。
+export function limit(samples, sampleRate, ceilingDb = -1) {
+  const ceil = Math.pow(10, ceilingDb / 20);
+  const n = samples.length;
+  const look = Math.max(1, Math.round(sampleRate * 0.005));
+  const need = new Float32Array(n);
+  for (let i = 0; i < n; i++) {
+    const a = Math.abs(samples[i]);
+    need[i] = a > ceil ? ceil / a : 1;
+  }
+  // 先読み区間の最小値（= 最も強く抑える必要のある値）
+  const minAhead = new Float32Array(n);
+  const dq = [];
+  for (let i = n - 1; i >= 0; i--) {
+    while (dq.length && need[dq[dq.length - 1]] >= need[i]) dq.pop();
+    dq.push(i);
+    while (dq[0] > i + look) dq.shift();
+    minAhead[i] = need[dq[0]];
+  }
+  const rel = 1 - Math.exp(-1 / (sampleRate * 0.06));
+  const out = new Float32Array(n);
+  let gain = 1;
+  for (let i = 0; i < n; i++) {
+    const target = minAhead[i];
+    gain = target < gain ? target : gain + (target - gain) * rel;
+    out[i] = Math.max(-ceil, Math.min(ceil, samples[i] * gain));
+  }
+  return out;
 }
